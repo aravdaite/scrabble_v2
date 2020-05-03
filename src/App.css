@@ -1,0 +1,525 @@
+.closed{
+  height: 50px;
+  width: 50px;
+  background-color: black;
+  padding: 10px;
+}
+.open{
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  padding: 10px;
+}
+.body{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: pink;
+}
+.header{
+  display: inline;
+  width: 100%;
+  background-color: pink;
+}
+.logo-welcome{
+  display: flex;
+}
+.Logo{
+  margin: 10px;
+}
+.ToolbarText{
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  font-size: 36px;
+  font-weight:600;
+  margin: 10px;
+}
+.NavigationItem{
+  font-size: 24px;
+  margin: 10px 20px;
+  text-decoration: none;
+  color: white;
+}
+.NavigationItem-active{
+  font-size: 24px;
+  margin: 10px 20px;
+  text-decoration: none;
+  color: white;
+  border-bottom: 2px solid white;
+}
+.navigation-link:hover{
+  text-shadow: 1px 1px 1px white;
+  cursor: pointer;
+}
+.navigation{
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 40px 0 0;
+  height: 80%;
+}
+.navigation-list {
+display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 10px 0;
+}
+.Scrabble__mainBody{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-height: 100vh;
+  background-color: pink; 
+}
+
+.About__mainBody{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100vh;
+  background-color: pink; 
+  color: white;
+  padding: 40px 0 0 0;
+}
+.About__playLink{
+  text-align: center;
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: 700;
+  color: white;
+  border: 2px solid white;
+  height: auto;
+  width: auto;
+  padding: 20px;
+  background-color: rgb(245, 126, 148);
+  border-radius: 45px;
+}
+.About__playLink:hover{
+  background-color: rgb(255, 73, 109);
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+.About__li{
+  padding: 10px 0;
+  font-size: 20px;
+}
+
+.Scrabble__gameField{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(245, 206, 213);
+}
+
+.WordList{
+  color: white;
+  padding: 20px;
+  background-color: pink;
+  width: 20%;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+h3{
+  letter-spacing: 1.2px;
+  font-weight: 500;
+}
+.WordList__item{
+  font-size: 18px;
+  margin: 10px;
+}
+.Button__ShowMeaning{
+  font-size: 18px;
+  color: white;
+  border: 0;
+  height: auto;
+  width: auto;
+  background-color: rgb(245, 126, 148);
+  border-radius: 45px;
+  margin: 0 0 0 10px;
+}
+.Button__ShowMeaning:hover{
+  background-color: rgb(255, 73, 109);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+.backdrop{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+}
+.no-backdrop{
+  display: none;
+}
+
+.Definitions{
+  padding: 0;
+  display: inline;
+  position: absolute;
+  background-color: pink;
+  max-height: 80%;
+  overflow-y: scroll;
+}
+.Definitions__strong {
+  text-transform: capitalize;
+  line-height: 32px;
+}
+.Definitions__ul1 {
+  list-style-type: none;
+}
+.Definitions__ul2 {
+  padding: 0 0 0 20px;
+}
+.Button__exit{
+  float: right;
+  background-color: pink;
+  border: 2px solid white;
+  color: white;
+  margin: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-weight: 700;
+}
+
+
+.Scrabble__mainBox-started{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+.Button__start{
+  font-size: 46px;
+  color: white;
+  border: 2px solid white;
+  height: 25%;
+  width: 20%;
+  background-color: rgb(245, 126, 148);
+  border-radius: 45px;
+  width: 300px;
+  height: 100px;
+}
+.Button__start:hover{
+  background-color: rgb(255, 73, 109);
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+
+.Button__start-started{
+  display: none;
+
+}
+.gameMode__Buttons{
+  display: flex;
+  justify-content: center;
+}
+.Button__gameMode{
+  font-size: 18px;
+  color: white;
+  border: 0;
+  height: auto;
+  width: auto;
+  background-color: rgb(245, 126, 148);
+  border-radius: 3px;
+  margin: 10px;
+}
+.Button__gameMode:hover{
+cursor: pointer;
+}
+.Scrabble__title{
+  color: white;
+  font-size: 36px;
+}
+
+.Scrabble__WordBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 20px;
+  border-bottom: 2px solid;
+  border-color: white;
+  width: 500px;
+  height: 100px;
+}
+.Button__WordLetterCard{
+  display: block;
+  text-align: center;
+  height: auto;
+  width: auto;
+  background-color: rgb(245, 206, 213);
+  border-bottom: 2px solid;
+  border-color: white;
+  margin: 10px 0 10px 0;
+  padding: 10px 10px 0 10px;
+  color: rgb(66, 153, 146);
+  font-size: 36px;
+  font-weight: 700;
+  cursor: pointer;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  text-transform: uppercase;
+}
+.example-enter {
+  opacity: 0.01;
+  width: 0px;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  width: 100px;
+  transition: 700ms;
+}
+
+.example-leave {
+  opacity: 1;
+  width: 100px;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  width: 0px;
+  transition: 700ms;
+}
+.Button__WordLetterCard:hover{
+  font-size: 42px;
+}
+
+.Button__WordLetterCard-empty{
+  display: none;
+}
+.Button__enter{
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  font-size: 26px;
+  color: white;
+  border: 0;
+  height: auto;
+  width: auto;
+  background-color: rgb(245, 126, 126);
+  border-radius: 45px;
+}
+.Button__enter-green{
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  font-size: 26px;
+  color: white;
+  border: 0;
+  height: auto;
+  width: auto;
+  background-color: rgb(156, 206, 151);
+  border-radius: 45px;
+}
+.Button__enter-green:hover{
+  cursor: pointer;
+  background-color: rgb(90, 175, 77);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+  font-size: 28px;
+  margin: 7px;
+}
+.Button__enter:hover{
+  background-color: rgb(247, 65, 65);
+}
+.Button__enter-none{
+  display: none;
+}
+
+.Scrabble__LetterBox{
+  display: flex;
+  flex-direction: row;
+  border: 2px solid white;
+  
+}
+.Button__LetterCard{
+  display: block;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 80px;;
+  color: rgb(66, 150, 153);
+  height: 80px;
+  width: 80px;
+  background-color: rgb(242, 247, 174);
+  border: 1px solid;
+  border-color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.Button__LetterCard:hover{
+  font-size: 42px;
+}
+.Button__shuffle{
+  font-size: 28px;
+  color: white;
+  background-color: pink;
+}
+.Button__shuffle:hover{
+background-color: rgb(250, 112, 140);
+cursor: pointer;
+}
+.Button__newGame{
+  font-size: 24px;
+  color: white;
+  border: 2px solid white;
+  height: 25%;
+  width: auto;
+  background-color: rgb(245, 126, 148);
+  border-radius: 45px;
+  margin: 20px;
+  padding: 10px;
+}
+.Button__newGame:hover{
+  background-color: rgb(255, 73, 109);
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.24), 0 4px 5px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+.Register{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(245, 126, 148);
+  width: auto;
+  height: 60vh;
+  padding: 100px 50px 0 50px;
+}
+.Register__link{
+text-decoration: none;
+padding: 20px;
+color: white;
+}
+.Register__link:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+.Input{
+  width: auto;
+  height: auto;
+  background-color: rgb(245, 126, 148);
+}
+.Input__inputField{
+  width: auto;
+  height: auto;
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+}
+
+.footer{
+  display: flex;
+  align-items: flex-end;
+  height: 50px;
+  justify-content: center;
+  background-color: pink;
+  color: white;
+}
+@media only screen and (max-width: 600px) {
+  .logo-image{
+      height: 64px;
+      margin: 10px;
+  }
+  .Scrabble__mainBody{
+      flex-direction: column;
+  }
+  .Button__start{
+      font-size: 20px;
+      height: 10vh;
+      width: 50%;
+  }
+  .Scrabble__gameField{
+      order: 1;
+      min-height: 75vh;
+  }
+  .WordList{
+      padding: 10px 0 0 10px;
+      margin: 0;
+      order: 2;
+      width: auto;
+      flex: 1;
+  }
+
+  .header{
+      height: auto;
+    }
+
+  .ToolbarText{
+      font-size: 16px;
+      align-items: flex-start;
+      padding: 5% 0 0 0;
+  }
+  .NavigationItem{
+      font-size: 18px;
+  
+  }
+
+  .navigation{
+      padding: 0;
+  }
+
+  h3{
+      margin: 10px 0 0 20px;
+  }
+
+  .Scrabble__mainBox-started{
+      width: 90%;
+      height: 50vh;
+  }
+  .Scrabble__mainBox{
+      width: 90%;
+  }
+
+  .Scrabble__title{
+      font-size: 24px;
+  }
+  
+  .Scrabble__WordBox{
+      width: 100%;
+  }
+  .Button__WordLetterCard{
+      width: auto;
+      font-size: 24px;
+  }
+  .Button__WordLetterCard:hover{
+      font-size: 24px;
+  }
+
+  .Button__enter{
+      font-size: 18px;
+  }
+  .Button__enter-green{
+      font-size: 18px;
+  }
+  
+  .Scrabble__LetterBox{
+      width: 100%;     
+  }
+  .Button__LetterCard{
+      font-size: 24px;
+      line-height: 40px;
+      height: 40px;
+      width: 50px;
+  }
+
+  .Button__shuffle{
+      font-size: 16px;
+  }
+
+  .Button__newGame{
+      font-size: 18px;
+      height: auto;
+  }
+  .Definitions {
+      width: 90%;
+  }
+
+}

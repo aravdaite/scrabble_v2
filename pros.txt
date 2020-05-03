@@ -1,0 +1,6 @@
+
+- responsive design for 3 different screen sizes
+- uses third party API (oxford dictionary) to check if a string is valid word and to fetch word meanings
+- register/login function, reset password function (uses REST api)
+- MongoDB (mongoose)
+
