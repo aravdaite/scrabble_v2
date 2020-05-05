@@ -16,7 +16,7 @@ class Words7 extends Component {
 
     getWord = () => {
 
-        fetch('http://localhost:5000/api/words/findword7', {
+        fetch('https://scrabble-api21.herokuapp.com/api/words/findword7', {
             method: 'get',
         })
             .then(res => res.json())
@@ -82,11 +82,15 @@ class Words7 extends Component {
         this.setState({ letters: letters, rightWord: false });
     }
     enterWord = () => {
-        let word = [...this.state.word];
+        let { word, originalWord } = this.state;
+        word = [...this.state.word];
         word = word.join('');
         this.props.addWord(word, '');
-        this.setState({ word: [], letterPosition: [], letters: [], originalWord: [], rightWord: false });
-        this.getWord();
+
+        if (word === originalWord) {
+            this.setState({ word: [], letterPosition: [], letters: [], originalWord: [], rightWord: false });
+            this.getWord();
+        }
     }
     render() {
         const { word, letters, rightWord, started } = this.state;

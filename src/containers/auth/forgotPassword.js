@@ -23,7 +23,7 @@ class forgotPassword extends Component {
         this.setState({ email }, () => console.log(this.state.email));
     }
     onSubmit = () => {
-        fetch('http://localhost:5000/api/auth/forgotpassword', {
+        fetch('https://scrabble-api21.herokuapp.com/api/auth/forgotpassword', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

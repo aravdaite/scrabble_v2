@@ -15,7 +15,7 @@ export const getWordData = (word) => {
         });
 }
 export const getWordDataOxford = (word) => {
-    return fetch(`http://localhost:5000/api/dictionary/oxford/${word}`, {
+    return fetch(`https://scrabble-api21.herokuapp.com/api/dictionary/oxford/${word}`, {
         method: 'get'
     })
         .then(res => res.json())

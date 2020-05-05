@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import { Input, Button } from '../../components';
 
+export const reg = (name, email, password) => {
+    return fetch('https://scrabble-api21.herokuapp.com/api/auth/register', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password
 
+        })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res) { this.props.history.push("/") }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+}
 class Register extends Component {
 
     state = {
@@ -88,24 +107,8 @@ class Register extends Component {
         this.setState({ controls: updatedControls }, () => console.log(JSON.stringify(this.state.controls.password.value)));
     }
     onSubmit = () => {
-        fetch('http://localhost:5000/api/auth/register', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: this.state.controls.name.value,
-                email: this.state.controls.email.value,
-                password: this.state.controls.password.value
-
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res) { this.props.history.push("/") }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
+        reg(this.state.controls.name.value, this.state.controls.email.value, this.state.controls.password.value);
+        window.location.href = "/";
     }
     render() {
         const formElementsArray = [];

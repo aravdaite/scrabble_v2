@@ -1,39 +1,45 @@
 import React, { Component } from 'react';
-import { Button } from '../components';
+import { Button, Spinner } from '../components';
 import Freestyle from './Freestyle';
 import Words7 from './Words7';
 
+export const fetchWords = () => {
+    return fetch('https://scrabble-api21.herokuapp.com/api/auth/words', {
+        method: 'get',
+    })
+        .then(res => res.json())
+        .catch(err => {
+            console.log(err);
+        });
+}
 class Layout extends Component {
 
     state = {
         gameMode: 'freestyle',
         wordListFree: [],
         wordList7: [],
+        loading: false
     }
 
     componentDidMount = () => {
+        this.setState({ loading: true });
+        let data = [];
+        let data2 = [];
 
-        fetch('http://localhost:5000/api/auth/words', {
-            method: 'get',
-        })
-            .then(res => res.json())
+        fetchWords()
             .then(res => {
-                console.log(res.data)
-                const data = [...res.data[0]];
-                const data2 = [...res.data[1]];
-                this.setState({ wordListFree: data, wordList7: data2 })
+                console.log(res.data[0])
+                data = [...res.data[0]];
+                data2 = [...res.data[1]];
+                this.setState({ wordListFree: data, wordList7: data2, loading: false })
             })
-            .catch(err => {
-                console.log(err);
-            });
-
     }
 
     addWord = (word, mode) => {
         if (mode === 'freestyle') {
 
             if (this.state.name !== '') {
-                fetch('http://localhost:5000/api/auth/addFreeWord', {
+                fetch('https://scrabble-api21.herokuapp.com/api/auth/addFreeWord', {
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -42,9 +48,10 @@ class Layout extends Component {
                 })
                     .then(res => res.json())
                     .then(res => {
-                        console.log(res.data)
-                        const data = [...res.data];
-                        this.setState({ wordListFree: data })
+                        if (res.hasOwnProperty('data')) {
+                            const data = [...res.data];
+                            this.setState({ wordListFree: data })
+                        }
                     })
                     .catch(err => {
                         console.log(err);
@@ -56,29 +63,51 @@ class Layout extends Component {
                 this.setState({ wordListFree })
             }
         } else {
-            const wordList7 = [...this.state.wordList7]
-            wordList7.unshift(word);
-            this.setState({ wordList7 })
+            if (this.state.name !== '') {
+                fetch('https://scrabble-api21.herokuapp.com/api/auth/addSevenWord', {
+                    method: 'put',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        word: word,
+                    })
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        const data = [...res.data];
+                        this.setState({ wordList7: data })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+
+                //   } else {
+                const wordList7 = [...this.state.wordList7]
+                wordList7.unshift(word);
+                this.setState({ wordList7 })
+            }
         }
     }
 
     render() {
-        const { gameMode, wordListFree, wordList7 } = this.state;
+        const { gameMode, wordListFree, wordList7, loading } = this.state;
         return (
-            <div>
-                <div className="gameMode__Buttons">
-                    <Button type="gameMode" text="Free-Style" onClick={() => this.setState({ gameMode: 'freestyle' })} />
-                    <Button type="gameMode" text="7 Letter Words" onClick={() => this.setState({ gameMode: 'letters7' })} />
-                </div>
-                <div className="Scrabble__mainBody">
-                    {gameMode === 'freestyle' ?
-                        <Freestyle addWord={this.addWord} wordList={wordListFree} />
-                        :
-                        <Words7 addWord={this.addWord} wordList={wordList7} />
-                    }
+            loading ?
+                <Spinner />
+                :
+                <div>
+                    <div className="gameMode__Buttons">
+                        <Button type="gameMode" text="Free-Style" onClick={() => this.setState({ gameMode: 'freestyle' })} />
+                        <Button type="gameMode" text="7 Letter Words" onClick={() => this.setState({ gameMode: 'letters7' })} />
+                    </div>
+                    <div className="Scrabble__mainBody">
+                        {gameMode === 'freestyle' ?
+                            <Freestyle addWord={this.addWord} wordList={wordListFree} />
+                            :
+                            <Words7 addWord={this.addWord} wordList={wordList7} />
+                        }
 
-                </div>
-            </div >
+                    </div>
+                </div >
         )
     }
 }

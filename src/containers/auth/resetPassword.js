@@ -23,7 +23,7 @@ class resetPassword extends Component {
     }
     onSubmit = () => {
         const token = this.props.match.params.token;
-        fetch(`http://localhost:5000/api/auth/resetpassword/${token}`, {
+        fetch(`https://scrabble-api21.herokuapp.com/api/auth/resetpassword/${token}`, {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

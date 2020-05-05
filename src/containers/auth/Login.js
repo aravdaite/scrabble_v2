@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import { Input, Button } from '../../components';
 import { NavLink } from 'react-router-dom';
 
+
+export const log = (email, password) => {
+    return fetch('https://scrabble-api21.herokuapp.com/api/auth/login', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            email: email,
+            password: password
+
+        })
+    })
+        .then(res => console.log(res))
+        .catch(err => {
+            console.log(err);
+        });
+}
 class Login extends Component {
 
     state = {
@@ -37,18 +53,7 @@ class Login extends Component {
     }
 
     onSubmit = () => {
-        fetch('http://localhost:5000/api/auth/login', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: this.state.controls.email.value,
-                password: this.state.controls.password.value
-
-            })
-        })
-            .catch(err => {
-                console.log(err);
-            });
+        log(this.state.controls.email.value, this.state.controls.password.value);
         window.location.href = "/";
     }
     render() {
