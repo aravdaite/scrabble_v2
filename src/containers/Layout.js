@@ -28,10 +28,14 @@ class Layout extends Component {
 
         fetchWords()
             .then(res => {
-                console.log(res.data[0])
-                data = [...res.data[0]];
-                data2 = [...res.data[1]];
-                this.setState({ wordListFree: data, wordList7: data2, loading: false })
+                if (res.hasOwnProperty('data')) {
+                    console.log(res.data[0])
+                    data = [...res.data[0]];
+                    data2 = [...res.data[1]];
+                    this.setState({ wordListFree: data, wordList7: data2, loading: false })
+                } else {
+                    this.setState({ wordListFree: [], wordList7: [], loading: false })
+                }
             })
     }
 
@@ -73,8 +77,10 @@ class Layout extends Component {
                 })
                     .then(res => res.json())
                     .then(res => {
-                        const data = [...res.data];
-                        this.setState({ wordList7: data })
+                        if (res.hasOwnProperty('data')) {
+                            const data = [...res.data];
+                            this.setState({ wordList7: data })
+                        }
                     })
                     .catch(err => {
                         console.log(err);

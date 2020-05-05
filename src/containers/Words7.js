@@ -21,10 +21,12 @@ class Words7 extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res.word.words)
-                const arr = [...Array.from(res.word.words)]
-                shuffle(arr);
-                this.setState({ originalWord: res.word.words, letters: arr, started: true });
+                if ((res.hasOwnProperty('word')) && res.word.hasOwnProperty('words')) {
+                    console.log(res.word.words)
+                    const arr = [...Array.from(res.word.words)]
+                    shuffle(arr);
+                    this.setState({ originalWord: res.word.words, letters: arr, started: true });
+                }
             })
     }
     putLetterToWord = (index) => {
@@ -85,9 +87,8 @@ class Words7 extends Component {
         let { word, originalWord } = this.state;
         word = [...this.state.word];
         word = word.join('');
-        this.props.addWord(word, '');
-
         if (word === originalWord) {
+            this.props.addWord(word, '');
             this.setState({ word: [], letterPosition: [], letters: [], originalWord: [], rightWord: false });
             this.getWord();
         }
