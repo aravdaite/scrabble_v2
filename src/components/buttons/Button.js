@@ -39,7 +39,7 @@ const getButtonType = ({ type = '', ...rest }) => {
             text: "Submit"
         },
         gameMode: {
-            className: "Button__gameMode",
+            className: rest.active ? "Button__gameMode-active" : "Button__gameMode",
             text: rest.text
         }
     }

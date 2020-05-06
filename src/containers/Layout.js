@@ -28,7 +28,7 @@ class Layout extends Component {
 
         fetchWords()
             .then(res => {
-                if (res.hasOwnProperty('data')) {
+                if (res && res.hasOwnProperty('data')) {
                     console.log(res.data[0])
                     data = [...res.data[0]];
                     data2 = [...res.data[1]];
@@ -97,23 +97,26 @@ class Layout extends Component {
     render() {
         const { gameMode, wordListFree, wordList7, loading } = this.state;
         return (
-            loading ?
-                <Spinner />
-                :
-                <div>
-                    <div className="gameMode__Buttons">
-                        <Button type="gameMode" text="Free-Style" onClick={() => this.setState({ gameMode: 'freestyle' })} />
-                        <Button type="gameMode" text="7 Letter Words" onClick={() => this.setState({ gameMode: 'letters7' })} />
-                    </div>
-                    <div className="Scrabble__mainBody">
-                        {gameMode === 'freestyle' ?
+
+            <div>
+                <div className="gameMode__Buttons">
+                    <Button active={gameMode === 'freestyle'} type="gameMode" text="Free-Style" onClick={() => this.setState({ gameMode: 'freestyle' })} />
+                    <Button active={gameMode === 'letters7'} type="gameMode" text="7 Letter Words" onClick={() => this.setState({ gameMode: 'letters7' })} />
+                </div>
+                <div className="Scrabble__mainBody">
+                    {loading ?
+                        <Spinner />
+                        :
+                        gameMode === 'freestyle' ?
                             <Freestyle addWord={this.addWord} wordList={wordListFree} />
                             :
                             <Words7 addWord={this.addWord} wordList={wordList7} />
-                        }
 
-                    </div>
-                </div >
+                    }
+
+
+                </div>
+            </div >
         )
     }
 }

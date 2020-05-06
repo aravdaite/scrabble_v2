@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Definitions, Spinner } from '../components'
-import { getWordData } from '../containers/Freestyle'
+import { getWordData, getWordDataOxford } from '../containers/Freestyle'
 
 export class WordList extends Component {
     state = {
@@ -26,15 +26,27 @@ export class WordList extends Component {
         this.setState({ loading: true });
         const categories = [];
         const definitions = [];
-
-        getWordData(word).then(response => {
-            response.forEach(res => {
-                categories.push(res.fl)
-                definitions.push(res.shortdef)
-            })
-            this.setState({ categories, definitions, loading: false })
+        getWordDataOxford(word).then(res => {
+            if (res && res.response[0]) {
+                for (let index in res.response) {
+                    for (let cat in res.response[index]) {
+                        categories.push(cat);
+                        definitions.push(res.response[index][cat])
+                    }
+                }
+                this.setState({ categories, definitions, loading: false })
+            } else {
+                getWordData(word).then(response => {
+                    response.forEach(res => {
+                        categories.push(res.fl)
+                        definitions.push(res.shortdef)
+                    })
+                    this.setState({ categories, definitions, loading: false })
+                })
+            }
         })
     }
+
 
     showWordDescription = (word) => {
         this.openModal()

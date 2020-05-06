@@ -165,6 +165,7 @@ h3{
   position: absolute;
   background-color: pink;
   max-height: 80%;
+  max-width: 60%;
   overflow-y: scroll;
 }
 .Definitions__strong {
@@ -173,6 +174,7 @@ h3{
 }
 .Definitions__ul1 {
   list-style-type: none;
+  padding: 0 15px 0 15px;
 }
 .Definitions__ul2 {
   padding: 0 0 0 20px;
@@ -228,6 +230,16 @@ h3{
   height: auto;
   width: auto;
   background-color: rgb(245, 126, 148);
+  border-radius: 3px;
+  margin: 10px;
+}
+.Button__gameMode-active{
+  font-size: 18px;
+  color: white;
+  border: 0;
+  height: auto;
+  width: auto;
+  background-color: rgb(233, 64, 98);
   border-radius: 3px;
   margin: 10px;
 }

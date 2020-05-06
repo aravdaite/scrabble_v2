@@ -123,7 +123,7 @@ class Freestyle extends Component {
         if (word !== "") {
             getWordDataOxford(word).then(res => {
                 //if dictionary returns at least one lexical category, it is a word
-                if (res.success) {
+                if (res && res.success) {
                     if (Object.keys(res.response).length === 0) {
                         this.setState({ isWord: false })
                     } else {

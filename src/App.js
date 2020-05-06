@@ -30,7 +30,7 @@ class App extends Component {
 
     getData()
       .then(res => {
-        if (res.success) {
+        if (res && res.success) {
           let string = `, ${res.data.name}`;
           this.setState({ name: string, logedIn: res.success })
         }
