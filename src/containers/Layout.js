@@ -44,6 +44,7 @@ class Layout extends Component {
 
             if (this.state.name !== '') {
                 fetch('https://scrabble-api21.herokuapp.com/api/auth/addFreeWord', {
+                    mode: 'no-cors',
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -69,6 +70,7 @@ class Layout extends Component {
         } else {
             if (this.state.name !== '') {
                 fetch('https://scrabble-api21.herokuapp.com/api/auth/addSevenWord', {
+                    mode: 'no-cors',
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

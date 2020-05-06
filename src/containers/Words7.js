@@ -17,6 +17,7 @@ class Words7 extends Component {
     getWord = () => {
 
         fetch('https://scrabble-api21.herokuapp.com/api/words/findword7', {
+            mode: 'no-cors',
             method: 'get',
         })
             .then(res => res.json())

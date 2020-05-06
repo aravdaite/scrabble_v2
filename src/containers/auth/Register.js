@@ -3,6 +3,7 @@ import { Input, Button } from '../../components';
 
 export const reg = (name, email, password) => {
     return fetch('https://scrabble-api21.herokuapp.com/api/auth/register', {
+        mode: 'no-cors',
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

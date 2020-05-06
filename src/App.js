@@ -12,6 +12,7 @@ import { Toolbar, Footer } from './components';
 
 export const getData = () => {
   return fetch('https://scrabble-api21.herokuapp.com/api/auth/me', {
+    mode: 'no-cors',
     method: 'get',
   })
     .then(res => res.json())

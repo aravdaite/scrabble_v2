@@ -7,7 +7,8 @@ const key = "ee45ee9d-510f-4b5e-81f1-7bb7f90d3ffe";
 
 export const getWordData = (word) => {
     return fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${key}`, {
-        "method": "GET"
+        mode: 'no-cors',
+        method: 'get'
     })
         .then(res => res.json())
         .catch(err => {
@@ -16,6 +17,7 @@ export const getWordData = (word) => {
 }
 export const getWordDataOxford = (word) => {
     return fetch(`https://scrabble-api21.herokuapp.com/api/dictionary/oxford/${word}`, {
+        mode: 'no-cors',
         method: 'get'
     })
         .then(res => res.json())

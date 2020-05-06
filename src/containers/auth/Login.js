@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export const log = (email, password) => {
     return fetch('https://scrabble-api21.herokuapp.com/api/auth/login', {
+        mode: 'no-cors',
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
