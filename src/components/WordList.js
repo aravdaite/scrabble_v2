@@ -28,6 +28,7 @@ export class WordList extends Component {
         const definitions = [];
         getWordDataOxford(word).then(res => {
             if (res && res.response[0]) {
+                console.log("runs here 2")
                 for (let index in res.response) {
                     for (let cat in res.response[index]) {
                         categories.push(cat);
@@ -37,10 +38,18 @@ export class WordList extends Component {
                 this.setState({ categories, definitions, loading: false })
             } else {
                 getWordData(word).then(response => {
+                    console.log("runs here ", response)
+                    if (response && !(Array.isArray(response)))
+                        console.log("runs here ", response, Array.isArray(response))
+                    // categories.push(`From ${response[0].meta.id}`)
                     response.forEach(res => {
+                        console.log("runs here ", res.meta.id)
+                        categories.push(`from ${res.meta.id.replace(/[0-9]/g, '').replace(/:/g, '')}`)
+                        definitions.push([])
                         categories.push(res.fl)
                         definitions.push(res.shortdef)
                     })
+                    console.log("runs here3 ", categories, definitions)
                     this.setState({ categories, definitions, loading: false })
                 })
             }
