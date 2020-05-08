@@ -41,6 +41,16 @@
   text-decoration: none;
   color: white;
 }
+.NavigationItem-button{
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+background-color: pink; 
+border: none;
+padding: 0;
+margin: 5px 20px 0 20px;
+
+}
 .NavigationItem-active{
   font-size: 24px;
   margin: 10px 20px;
@@ -88,16 +98,15 @@ display: flex;
   font-size: 23px;
   font-weight: 700;
   color: white;
-  border: 2px solid white;
   height: auto;
   width: auto;
   padding: 20px;
   background-color: rgb(245, 126, 148);
   border-radius: 45px;
+  margin: 20px;
 }
 .About__playLink:hover{
   background-color: rgb(255, 73, 109);
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   cursor: pointer;
 }
 .About__li{
@@ -138,6 +147,7 @@ h3{
   background-color: rgb(245, 126, 148);
   border-radius: 45px;
   margin: 0 0 0 10px;
+  padding: 5px 20px;
 }
 .Button__ShowMeaning:hover{
   background-color: rgb(255, 73, 109);
@@ -166,13 +176,18 @@ h3{
   background-color: pink;
   max-height: 80%;
   max-width: 60%;
+  min-height: 40%;
+  min-width: 30%;
   overflow-y: scroll;
 }
 .Definitions__strong {
+  font-size: 18px;
   text-transform: capitalize;
   line-height: 32px;
+  letter-spacing: 0.8px;
 }
 .Definitions__ul1 {
+ 
   list-style-type: none;
   padding: 0 15px 0 15px;
 }
@@ -435,7 +450,20 @@ color: white;
   background-color: pink;
   color: white;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 850px) {
+
+  .Button__LetterCard{
+    line-height: 20px;
+    width: 50px;
+    height: 50px;
+  }
+  .Scrabble__WordBox{
+    width: 80%;
+    margin: 20px 0;
+  }
+}
+@media only screen and (max-width: 650px) {
+
   .logo-image{
       height: 64px;
       margin: 10px;
@@ -443,6 +471,7 @@ color: white;
   .Scrabble__mainBody{
       flex-direction: column;
   }
+
   .Button__start{
       font-size: 20px;
       height: 10vh;
@@ -471,10 +500,13 @@ color: white;
   }
   .NavigationItem{
       font-size: 18px;
-  
   }
+  .NavigationItem-button{
+    font-size: 18px;
+}
 
   .navigation{
+    justify-content: center;
       padding: 0;
   }
 
@@ -513,7 +545,7 @@ color: white;
   }
   
   .Scrabble__LetterBox{
-      width: 100%;     
+      width: auto;     
   }
   .Button__LetterCard{
       font-size: 24px;

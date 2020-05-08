@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, WordList } from '../components';
+import { DOMAIN } from '../App';
 
 const vowels = 'AEIOUY';
 const consonants = 'BCDFGHJKLMNPQRSTVWXZ';
@@ -15,7 +16,7 @@ export const getWordData = (word) => {
         });
 }
 export const getWordDataOxford = (word) => {
-    return fetch(`https://scrabble-api21.herokuapp.com/api/dictionary/oxford/${word}`, {
+    return fetch(`${DOMAIN}/api/dictionary/oxford/${word}`, {
         method: 'get'
     })
         .then(res => res.json())

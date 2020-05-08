@@ -39,18 +39,22 @@ export class WordList extends Component {
             } else {
                 getWordData(word).then(response => {
                     console.log("runs here ", response)
-                    if (response && !(Array.isArray(response)))
-                        console.log("runs here ", response, Array.isArray(response))
-                    // categories.push(`From ${response[0].meta.id}`)
-                    response.forEach(res => {
-                        console.log("runs here ", res.meta.id)
-                        categories.push(`from ${res.meta.id.replace(/[0-9]/g, '').replace(/:/g, '')}`)
-                        definitions.push([])
-                        categories.push(res.fl)
-                        definitions.push(res.shortdef)
-                    })
-                    console.log("runs here3 ", categories, definitions)
-                    this.setState({ categories, definitions, loading: false })
+                    if (response && response.length !== 20) {
+                        console.log("runs here ", response)
+                        // categories.push(`From ${response[0].meta.id}`)
+                        response.forEach(res => {
+                            console.log("runs here ", res.meta.id)
+                            categories.push(`from "${res.meta.id.replace(/[0-9]/g, '').replace(/:/g, '')}"`)
+                            definitions.push([])
+                            categories.push(res.fl)
+                            definitions.push(res.shortdef)
+                        })
+
+                        console.log("runs here3 ", categories, definitions)
+                        this.setState({ categories, definitions, loading: false })
+                    } else {
+                        this.setState({ categories, definitions, loading: false })
+                    }
                 })
             }
         })
@@ -72,8 +76,8 @@ export class WordList extends Component {
         const wordsList = words
             .map((word, index) => (
                 <li className="WordList__item" key={index}>
-                    {word !== null ? word.toLowerCase() : ''}
-                    <Button type="showMeaning" onClick={() => this.showWordDescription(word)} />
+
+                    <Button text={word !== null ? word.toLowerCase() : ''} type="showMeaning" onClick={() => this.showWordDescription(word)} />
                 </li>
             )
             )

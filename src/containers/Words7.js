@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, WordList } from '../components';
 import { shuffle, removeFromArray } from './Freestyle';
+import { DOMAIN } from '../App';
+
 
 class Words7 extends Component {
 
@@ -16,7 +18,7 @@ class Words7 extends Component {
 
     getWord = () => {
 
-        fetch('https://scrabble-api21.herokuapp.com/api/words/findword7', {
+        fetch(`${DOMAIN}/api/words/findword7`, {
             method: 'get',
         })
             .then(res => res.json())

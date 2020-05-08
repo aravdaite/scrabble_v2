@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Button, Spinner } from '../components';
 import Freestyle from './Freestyle';
 import Words7 from './Words7';
+import { DOMAIN } from '../App';
 
 export const fetchWords = () => {
-    return fetch('https://scrabble-api21.herokuapp.com/api/auth/words', {
+    return fetch(`${DOMAIN}/api/auth/words`, {
+        credentials: 'include',
         method: 'get',
     })
         .then(res => res.json())
@@ -43,7 +45,8 @@ class Layout extends Component {
         if (mode === 'freestyle') {
 
             if (this.state.name !== '') {
-                fetch('https://scrabble-api21.herokuapp.com/api/auth/addFreeWord', {
+                fetch(`${DOMAIN}/api/auth/addFreeWord`, {
+                    credentials: 'include',
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -68,7 +71,8 @@ class Layout extends Component {
             }
         } else {
             if (this.state.name !== '') {
-                fetch('https://scrabble-api21.herokuapp.com/api/auth/addSevenWord', {
+                fetch(`${DOMAIN}/api/auth/addSevenWord`, {
+                    credentials: 'include',
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

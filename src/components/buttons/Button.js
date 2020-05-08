@@ -20,7 +20,7 @@ const getButtonType = ({ type = '', ...rest }) => {
         },
         showMeaning: {
             className: 'Button__ShowMeaning',
-            text: 'Show Meaning!'
+            text: rest.text
         },
         start: {
             className: rest.started ? "Button__start-started" : "Button__start",

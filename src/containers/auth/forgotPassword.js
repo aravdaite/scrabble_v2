@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Button } from '../../components';
+import { DOMAIN } from '../../App';
 
 
 class forgotPassword extends Component {
@@ -23,7 +24,8 @@ class forgotPassword extends Component {
         this.setState({ email }, () => console.log(this.state.email));
     }
     onSubmit = () => {
-        fetch('https://scrabble-api21.herokuapp.com/api/auth/forgotpassword', {
+        fetch(`${DOMAIN}/api/auth/forgotpassword`, {
+            credentials: 'include',
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
