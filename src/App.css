@@ -12,6 +12,7 @@
 }
 .body{
   display: flex;
+  height: auto;
   min-height: 100vh;
   flex-direction: column;
   background-color: pink;
@@ -449,9 +450,21 @@ color: white;
   justify-content: center;
   background-color: pink;
   color: white;
+  flex:2;
 }
 @media only screen and (max-width: 850px) {
+  .About__mainBody{
+    height: 100%;
+    flex: 1;
+    padding: 10px;
+  }
 
+  ul{
+    padding: 0;
+  }
+  .body{
+   
+  }
   .Button__LetterCard{
     line-height: 20px;
     width: 50px;
@@ -462,17 +475,28 @@ color: white;
     min-height: 80px;
     margin: 20px 0;
   }
+.Register{
+height: auto;
+padding: 5vh 0 10px 0;
+flex: 1;
+}
+.Button__ShowMeaning{
+  margin: 0;
+}
+.WordList__item {
+  padding: 0;
+}
 }
 @media only screen and (max-width: 650px) {
-  .body{
-    min-width: 320px;
-  }
+
   .logo-image{
       height: 64px;
       margin: 10px;
   }
   .Scrabble__mainBody{
       flex-direction: column;
+      min-height: 90vh;
+      height: auto;
   }
 
   .Button__start{
@@ -482,15 +506,24 @@ color: white;
   }
   .Scrabble__gameField{
       order: 1;
-      min-height: 75vh;
+      min-height: 60vh;
       min-width: 320px;
   }
   .WordList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
       padding: 10px 0 0 10px;
       margin: 0;
       order: 2;
       width: auto;
-      flex: 1;
+      height: 20vh;
+  }
+  ul{
+    padding: 0;
+  }
+  li{
+ 
   }
 
   .header{

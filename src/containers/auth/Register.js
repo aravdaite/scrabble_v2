@@ -132,7 +132,7 @@ class Register extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)} />
         ));
         return (
-            <div>
+            <div >
                 <div className="Register">
                     {form}
                     <Button type="submit" onClick={this.onSubmit} />
