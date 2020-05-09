@@ -9,7 +9,6 @@ import forgotPassword from './containers/auth/forgotPassword';
 import resetPassword from './containers/auth/resetPassword';
 import { Toolbar, Footer } from './components';
 
-
 export const DOMAIN = 'https://scrabble-api21.herokuapp.com';
 export const getData = () => {
   return fetch(`${DOMAIN}/api/auth/me`, {

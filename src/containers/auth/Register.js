@@ -109,8 +109,8 @@ class Register extends Component {
         this.setState({ controls: updatedControls }, () => console.log(JSON.stringify(this.state.controls.password.value)));
     }
     onSubmit = () => {
-        reg(this.state.controls.name.value, this.state.controls.email.value, this.state.controls.password.value);
-        window.location.href = "/";
+        reg(this.state.controls.name.value, this.state.controls.email.value, this.state.controls.password.value)
+            .then(res => window.location.href = "/")
     }
     render() {
         const formElementsArray = [];

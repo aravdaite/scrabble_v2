@@ -459,11 +459,14 @@ color: white;
   }
   .Scrabble__WordBox{
     width: 80%;
+    min-height: 80px;
     margin: 20px 0;
   }
 }
 @media only screen and (max-width: 650px) {
-
+  .body{
+    min-width: 320px;
+  }
   .logo-image{
       height: 64px;
       margin: 10px;
@@ -480,6 +483,7 @@ color: white;
   .Scrabble__gameField{
       order: 1;
       min-height: 75vh;
+      min-width: 320px;
   }
   .WordList{
       padding: 10px 0 0 10px;
@@ -551,7 +555,7 @@ color: white;
       font-size: 24px;
       line-height: 40px;
       height: 40px;
-      width: 50px;
+      width: 40px;
   }
 
   .Button__shuffle{
@@ -563,7 +567,23 @@ color: white;
       height: auto;
   }
   .Definitions {
-      width: 90%;
+      max-width: 95%;
   }
 
+}
+@media only screen and (max-width: 365px) {
+  .Button__LetterCard{
+    width: 30px;
+    height: 30px;
+    line-height: 19px;
+  }
+  .Button__WordLetterCard{
+    padding: 7px;
+  }
+  .Button__enter-green:hover{
+    font-size: 22px;
+  }
+  .Button__LetterCard:hover{
+    font-size: 42px;
+  }
 }

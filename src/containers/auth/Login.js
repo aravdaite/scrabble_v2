@@ -56,8 +56,13 @@ class Login extends Component {
 
     onSubmit = () => {
         log(this.state.controls.email.value, this.state.controls.password.value)
-            .then(res => window.location.href = "/")
-
+            .then(res => {
+                if (res.success) {
+                    window.location.href = "/"
+                } else {
+                    window.alert("Login credentials were incorrect. Please try again!")
+                }
+            })
     }
     render() {
         const formElementsArray = [];

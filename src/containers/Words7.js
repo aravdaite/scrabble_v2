@@ -59,6 +59,7 @@ class Words7 extends Component {
 
             removeFromArray(word, index);
             removeFromArray(letterPosition, index);
+            this.validateWord(word);
 
             this.setState({ word, letters, letterPosition });
         }
@@ -67,6 +68,8 @@ class Words7 extends Component {
         const word2 = word.join('');
         if (word2 === this.state.originalWord) {
             this.setState({ rightWord: true });
+        } else {
+            this.setState({ rightWord: false });
         }
     }
     shuffleLetters = () => {
