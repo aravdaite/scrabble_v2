@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Button, Spinner } from '../components';
 import Freestyle from './Freestyle';
 import Words7 from './Words7';
-import { DOMAIN } from '../App';
 
 export const fetchWords = () => {
-    return fetch(`${DOMAIN}/api/auth/words`, {
+    return fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/words`, {
         credentials: 'include',
         method: 'get',
     })
@@ -45,7 +44,7 @@ class Layout extends Component {
         if (mode === 'freestyle') {
 
             if (this.state.name !== '') {
-                fetch(`${DOMAIN}/api/auth/addFreeWord`, {
+                fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/addFreeWord`, {
                     credentials: 'include',
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
@@ -71,7 +70,7 @@ class Layout extends Component {
             }
         } else {
             if (this.state.name !== '') {
-                fetch(`${DOMAIN}/api/auth/addSevenWord`, {
+                fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/addSevenWord`, {
                     credentials: 'include',
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },

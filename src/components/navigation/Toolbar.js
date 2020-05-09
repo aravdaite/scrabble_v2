@@ -1,9 +1,8 @@
 import React from 'react';
 import { Logo, NavigationItem } from '../../components';
-import { DOMAIN } from '../../App';
 
 const logout = () => {
-    fetch(`${DOMAIN}/api/auth/logout`, {
+    fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/logout`, {
         credentials: 'include',
         method: 'get',
     })

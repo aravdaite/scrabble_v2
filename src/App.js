@@ -9,9 +9,9 @@ import forgotPassword from './containers/auth/forgotPassword';
 import resetPassword from './containers/auth/resetPassword';
 import { Toolbar, Footer } from './components';
 
-export const DOMAIN = 'http://localhost:5000';
 export const getData = () => {
-  return fetch(`${DOMAIN}/api/auth/me`, {
+  console.log(process.env.REACT_APP_DOMAIN)
+  return fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/me`, {
     credentials: 'include',
     method: 'get',
   })

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Input, Button } from '../../components';
-import { DOMAIN } from '../../App';
 
 export const reg = (name, email, password) => {
-    return fetch(`${DOMAIN}/api/auth/register`, {
+    return fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/register`, {
         credentials: 'include',
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

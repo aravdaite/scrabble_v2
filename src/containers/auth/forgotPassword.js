@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Button } from '../../components';
-import { DOMAIN } from '../../App';
 
 
 class forgotPassword extends Component {
@@ -24,7 +23,7 @@ class forgotPassword extends Component {
         this.setState({ email }, () => console.log(this.state.email));
     }
     onSubmit = () => {
-        fetch(`${DOMAIN}/api/auth/forgotpassword`, {
+        fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/forgotpassword`, {
             credentials: 'include',
             method: 'post',
             headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input, Button } from '../../components';
-import { DOMAIN } from '../../App';
 
 class resetPassword extends Component {
 
@@ -24,7 +23,7 @@ class resetPassword extends Component {
     }
     onSubmit = () => {
         const token = this.props.match.params.token;
-        fetch(`${DOMAIN}/api/auth/resetpassword/${token}`, {
+        fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/resetpassword/${token}`, {
             credentials: 'include',
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
