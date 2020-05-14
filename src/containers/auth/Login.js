@@ -50,7 +50,7 @@ class Login extends Component {
                 value: event.target.value,
             }
         };
-        this.setState({ controls: updatedControls }, () => console.log(this.state.controls.password.value));
+        this.setState({ controls: updatedControls });
     }
 
     onSubmit = () => {
