@@ -27,7 +27,7 @@ class Words7 extends Component {
                     console.log(res.word.words)
                     const arr = [...Array.from(res.word.words)]
                     shuffle(arr);
-                    this.setState({ originalWord: res.word.words, letters: arr, started: true });
+                    this.setState({ originalWord: res.word.words, letters: arr, started: true, word: [], letterPosition: [], rightWord: false });
                 }
             })
     }
