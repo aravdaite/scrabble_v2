@@ -220,7 +220,10 @@ class Freestyle extends Component {
         const { started, word, isWord, letters } = this.state;
         return (
             <div className="Scrabble__mainBody">
-                <WordList words={this.props.wordList} />
+                <div className="WordList" >
+                    <h3>Words You've Made! </h3>
+                    <WordList words={this.props.wordList} />
+                </div>
                 <div className="Scrabble__gameField">
                     <Button type="start" started={started} onClick={this.getLetters} />
                     {
@@ -244,7 +247,7 @@ class Freestyle extends Component {
                                             onClick={() => this.putLetterToWord(index)} />)}
                                     <Button type="shuffle" onClick={this.shuffleLetters} />
                                 </div>
-                                <Button type="newGame" onClick={this.newGame} />
+                                <Button type="newGame" onClick={this.newGame} text="Get a new set of letters!" />
                             </div>
                             : ''
                     }

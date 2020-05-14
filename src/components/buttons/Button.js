@@ -12,7 +12,7 @@ const getButtonType = ({ type = '', ...rest }) => {
         },
         newGame: {
             className: 'Button__newGame',
-            text: 'New Set of Letters'
+            text: rest.text
         },
         shuffle: {
             className: 'Button__shuffle',
@@ -36,7 +36,7 @@ const getButtonType = ({ type = '', ...rest }) => {
         },
         submit: {
             className: "Button__submit",
-            text: "Submit"
+            text: rest.text ? rest.text : "Submit"
         },
         gameMode: {
             className: rest.active ? "Button__gameMode-active" : "Button__gameMode",

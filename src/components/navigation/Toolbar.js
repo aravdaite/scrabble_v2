@@ -8,7 +8,7 @@ const logout = () => {
     })
         .then(res => {
             if (res) {
-                window.location.reload();
+                window.location.href = "/"
             }
         })
         .catch(err => {
@@ -21,14 +21,17 @@ export const Toolbar = ({ name, login }) => (
     <header className="header">
         <div className="logo-welcome">
             <Logo />
-            <div className="ToolbarText">{`Welcome to scrabble trainer${name}!`}</div>
+            <div className="ToolbarText">{`Welcome to scrabble trainer${", " + name}!`}</div>
         </div>
         <nav className="navigation">
             <ul className="navigation-list">
                 <li><NavigationItem href="/" css_classActive="NavigationItem-active" css_class="NavigationItem">{"Game"} </NavigationItem></li>
                 <li><NavigationItem href="/about" css_classActive="NavigationItem-active" css_class="NavigationItem">{"About"}</NavigationItem></li>
                 {login ?
-                    <li><button onClick={() => logout()} className="NavigationItem-button">Logout</button></li>
+                    <div>
+                        <li><NavigationItem href="/me" css_classActive="NavigationItem-active" css_class="NavigationItem">{"Me"}</NavigationItem></li>
+                        <li><button onClick={() => logout()} className="NavigationItem-button">Logout</button></li>
+                    </div>
                     :
                     <div>
                         <li><NavigationItem href="/register" css_classActive="NavigationItem-active" css_class="NavigationItem">{"Register"}</NavigationItem></li>

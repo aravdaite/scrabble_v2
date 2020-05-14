@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Layout from './containers/Layout';
 import About from './containers/About';
+import Me from './containers/Me';
 import Register from './containers/auth/Register';
 import Login from './containers/auth/Login';
 import forgotPassword from './containers/auth/forgotPassword';
@@ -23,27 +24,29 @@ export const getData = () => {
 class App extends Component {
 
   state = {
-    name: '',
+    data: {},
     logedIn: false
   }
 
   componentDidMount() {
-
     getData()
       .then(res => {
         if (res && res.success) {
-          let string = `, ${res.data.name}`;
-          this.setState({ name: string, logedIn: res.success })
+          console.log(res.data)
+          //let string = `, ${res.data.name}`;
+          this.setState({ data: res.data, logedIn: res.success })
         }
       })
   }
 
   render() {
+    const { data, logedIn } = this.state;
     return (
       <div className="body" >
         <BrowserRouter>
-          <Toolbar name={this.state.name} login={this.state.logedIn} />
+          <Toolbar name={data.name} login={logedIn} />
           <Route exact path="/" component={Layout} />
+          <Route exact path="/me" component={() => <Me data={data} />} />
           <Route path="/about" component={About} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />

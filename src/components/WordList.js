@@ -76,15 +76,13 @@ export class WordList extends Component {
         const wordsList = words
             .map((word, index) => (
                 <li className="WordList__item" key={index}>
-
                     <Button text={word !== null ? word.toLowerCase() : ''} type="showMeaning" onClick={() => this.showWordDescription(word)} />
                 </li>
             )
             )
 
         return (
-            <div className="WordList" >
-                <h3>Words You've Made! </h3>
+            <div>
                 <ul>
                     {wordsList}
                 </ul>
