@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button } from '../../components';
+import { Input, Button, Spinner } from '../../components';
 
 export const reg = (name, email, password) => {
     return fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/register`, {
@@ -63,7 +63,8 @@ class Register extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        loading: false
     }
     checkValidity(value, rules) {
         let isValid = true;
@@ -105,11 +106,19 @@ class Register extends Component {
                 touched: true
             }
         };
-        this.setState({ controls: updatedControls }, () => console.log(JSON.stringify(this.state.controls.password.value)));
+        this.setState({ controls: updatedControls });
     }
     onSubmit = () => {
+        this.setState({ loading: true });
         reg(this.state.controls.name.value, this.state.controls.email.value, this.state.controls.password.value)
-            .then(res => window.location.href = "/")
+            .then(res => {
+                if (res && res.success) {
+                    this.setState({ loading: false });
+                    window.location.href = "/"
+                } else {
+                    this.setState({ loading: false }, () => window.alert("Was unable to register. Please try again!"));
+                }
+            })
     }
     render() {
         const formElementsArray = [];
@@ -132,10 +141,14 @@ class Register extends Component {
         ));
         return (
             <div >
-                <div className="Register">
-                    {form}
-                    <Button type="submit" onClick={this.onSubmit} />
-                </div>
+                {this.state.loading ?
+                    <Spinner />
+                    :
+                    <div className="Register">
+                        {form}
+                        <Button type="submit" onClick={this.onSubmit} />
+                    </div>
+                }
             </div>
         )
     }

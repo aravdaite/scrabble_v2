@@ -24,29 +24,41 @@ export const getData = () => {
 class App extends Component {
 
   state = {
-    data: {},
+    name: "",
     logedIn: false
   }
 
   componentDidMount() {
-    getData()
+
+    fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/me`, {
+      credentials: 'include',
+      method: 'get',
+    })
+      .then(res => res.json())
       .then(res => {
         if (res && res.success) {
           console.log(res.data)
           //let string = `, ${res.data.name}`;
-          this.setState({ data: res.data, logedIn: res.success })
+          this.setState({ name: res.data.name, logedIn: res.success })
         }
       })
+      .catch(err => {
+        console.log(err);
+        this.setState({ name: "", logedIn: false });
+        alert("The server has crashed!")
+      });
+
+
   }
 
   render() {
-    const { data, logedIn } = this.state;
+    const { name, logedIn } = this.state;
     return (
       <div className="body" >
         <BrowserRouter>
-          <Toolbar name={data.name} login={logedIn} />
+          <Toolbar name={name !== "" ? ", " + name : ""} login={logedIn} />
           <Route exact path="/" component={Layout} />
-          <Route exact path="/me" component={() => <Me data={data} />} />
+          <Route exact path="/me" component={Me} />
           <Route path="/about" component={About} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />

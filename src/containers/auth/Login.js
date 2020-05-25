@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button } from '../../components';
+import { Input, Button, Spinner } from '../../components';
 import { NavLink } from 'react-router-dom';
 
 
@@ -39,7 +39,8 @@ class Login extends Component {
                 },
                 value: '',
             }
-        }
+        },
+        loading: false
     }
 
     inputChangedHandler = (event, controlName) => {
@@ -54,12 +55,14 @@ class Login extends Component {
     }
 
     onSubmit = () => {
+        this.setState({ loading: true });
         log(this.state.controls.email.value, this.state.controls.password.value)
             .then(res => {
-                if (res.success) {
+                if (res && res.success) {
+                    this.setState({ loading: false });
                     window.location.href = "/"
                 } else {
-                    window.alert("Login credentials were incorrect. Please try again!")
+                    this.setState({ loading: false }, () => window.alert("Login credentials were incorrect. Please try again!"));
                 }
             })
     }
@@ -81,11 +84,14 @@ class Login extends Component {
         ));
         return (
             <div>
-                <div className="Register">
-                    {form}
-                    <Button type="submit" onClick={this.onSubmit} />
-                    <NavLink exact to='/forgotpassword' className="Register__link">Forgot your password?</NavLink>
-                </div>
+                {this.state.loading ?
+                    <Spinner />
+                    :
+                    <div className="Register">
+                        {form}
+                        <Button type="submit" onClick={this.onSubmit} />
+                        <NavLink exact to='/forgotpassword' className="Register__link">Forgot your password?</NavLink>
+                    </div>}
             </div>
         )
     }

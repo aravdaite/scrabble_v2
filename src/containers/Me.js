@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Input, Button, WordList } from '../components';
-import User from '../user.png'
+import { Input, Button, WordList, Spinner } from '../components';
+import User from '../user.png';
+import { getData } from '../App'
 
 export const changePass = (currentPassword, password) => {
     return fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/updatepassword`, {
@@ -18,6 +19,7 @@ export const changePass = (currentPassword, password) => {
             console.log(err);
         });
 }
+
 class Me extends Component {
     state = {
         change: false,
@@ -38,9 +40,25 @@ class Me extends Component {
                 },
                 value: '',
             }
-        }
+        },
+        name: "",
+        email: "",
+        sevenWords: [],
+        freeWords: [],
+        loading: false
     }
-
+    componentDidMount() {
+        this.setState({ loading: true });
+        getData()
+            .then(res => {
+                if (res && res.success) {
+                    console.log(res.data)
+                    const { name, email, sevenLetterWords, freestyleWords } = res.data;
+                    //let string = `, ${res.data.name}`;
+                    this.setState({ name, email, sevenWords: sevenLetterWords, freeWords: freestyleWords, loading: false })
+                }
+            })
+    }
     changePassword = () => {
         this.setState({ change: true })
     }
@@ -65,8 +83,7 @@ class Me extends Component {
             })
     }
     render() {
-        const { data } = this.props;
-        const { change } = this.state;
+        const { change, name, email, sevenWords, freeWords, loading } = this.state;
         const formElementsArray = [];
         for (let key in this.state.controls) {
             formElementsArray.push({
@@ -87,43 +104,42 @@ class Me extends Component {
         return (
             <div className="About__mainBody">
                 <h2>Welcome to your dashboard: </h2>
-                <div className="row">
-                    <div className="element">
-                        <img className="Me__avatar" src={User} alt="user's avatar" />
-                        <ul className="Me__info">
-                            <li>Name: {data.name}</li>
-                            <li>Email: {data.email}</li>
-                            {change ?
-                                <div>
-                                    {form}
-                                    <Button type="submit" onClick={this.onSubmit} />
-                                </div>
-                                :
-                                <li><Button text="Change password" type="submit" onClick={() => this.changePassword()} /></li>
+                {loading ?
+                    <Spinner />
+                    :
+                    <div className="row">
+                        <div className="element">
+                            <img className="Me__avatar" src={User} alt="user's avatar" />
+                            <ul className="Me__info">
+                                <li>Name: {name}</li>
+                                <li>Email: {email}</li>
+                                {change ?
+                                    <div>
+                                        {form}
+                                        <Button type="submit" onClick={this.onSubmit} />
+                                    </div>
+                                    :
+                                    <li><Button text="Change password" type="submit" onClick={() => this.changePassword()} /></li>
 
-                            }
-                        </ul>
+                                }
+                            </ul>
+                        </div>
+                        <div className="element">
+                            <p>Freestyle words you've made</p>
+
+                            {freeWords ?
+                                <WordList words={freeWords} />
+                                :
+                                ""}</div>
+                        <div className="element">
+                            <p>7 letter words you've unscrambled</p>
+                            {sevenWords ?
+                                <WordList words={sevenWords} />
+                                :
+                                ""}
+                        </div>
                     </div>
-                    <div className="element">
-                        <p>Freestyle words you've made</p>
-
-
-                        <ul>
-                            {data.freestyleWords ?
-
-                                <WordList words={this.props.data.freestyleWords} />
-
-                                :
-                                ""}</ul></div>
-                    <div className="element">
-                        <p>7 letter words you've unscrambled</p>
-                        <ul>
-                            {data.sevenLetterWords ?
-                                <WordList words={this.props.data.sevenLetterWords} />
-                                :
-                                ""}</ul>
-                    </div>
-                </div>
+                }
             </div >
         )
     }

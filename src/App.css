@@ -196,7 +196,9 @@ h3{
   padding: 0 0 0 20px;
 }
 .Button__exit{
-  float: right;
+  position: sticky;
+  top: 10px;
+  float:right;
   background-color: pink;
   border: 2px solid white;
   color: white;

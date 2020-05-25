@@ -24,38 +24,14 @@ export class WordList extends Component {
 
     getWordDesc = (word) => {
         this.setState({ loading: true });
-        const categories = [];
-        const definitions = [];
         getWordDataOxford(word).then(res => {
-            if (res && res.response[0]) {
-                console.log("runs here 2")
-                for (let index in res.response) {
-                    for (let cat in res.response[index]) {
-                        categories.push(cat);
-                        definitions.push(res.response[index][cat])
-                    }
-                }
+            console.log(res)
+            if (res !== undefined && res.success && res.response) {
+                const { categories, definitions } = res.response;
+                console.log("runs if", categories)
                 this.setState({ categories, definitions, loading: false })
             } else {
-                getWordData(word).then(response => {
-                    console.log("runs here ", response)
-                    if (response && response.length !== 20) {
-                        console.log("runs here ", response)
-                        // categories.push(`From ${response[0].meta.id}`)
-                        response.forEach(res => {
-                            console.log("runs here ", res.meta.id)
-                            categories.push(`from "${res.meta.id.replace(/[0-9]/g, '').replace(/:/g, '')}"`)
-                            definitions.push([])
-                            categories.push(res.fl)
-                            definitions.push(res.shortdef)
-                        })
-
-                        console.log("runs here3 ", categories, definitions)
-                        this.setState({ categories, definitions, loading: false })
-                    } else {
-                        this.setState({ categories, definitions, loading: false })
-                    }
-                })
+                this.setState({ loading: false })
             }
         })
     }

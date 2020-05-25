@@ -23,6 +23,15 @@ export const getWordDataOxford = (word) => {
             console.log(err);
         });
 }
+export const validate = (word) => {
+    return fetch(`${process.env.REACT_APP_DOMAIN}/api/dictionary/validate/${word}`, {
+        method: 'get'
+    })
+        .then(res => res.json())
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 export const shuffle = (letters) => {
     for (let i = letters.length - 1; i > 0; i--) {
@@ -121,17 +130,13 @@ class Freestyle extends Component {
     validateWord = (array) => {
         const word = array.join('');
         if (word !== "") {
-            getWordDataOxford(word).then(res => {
+            validate(word).then(res => {
+                console.log(res)
                 //if dictionary returns at least one lexical category, it is a word
                 if (res && res.success) {
-                    console.log(res, res.response)
-                    if (res.response[0]) {
-                        this.setState({ isWord: true })
-                    } else {
-                        this.setState({ isWord: false })
-                    }
+                    this.setState({ isWord: res.response })
                 } else {
-
+                    this.setState({ isWord: false })
                 }
             })
         }

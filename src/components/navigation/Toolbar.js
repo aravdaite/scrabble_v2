@@ -21,7 +21,7 @@ export const Toolbar = ({ name, login }) => (
     <header className="header">
         <div className="logo-welcome">
             <Logo />
-            <div className="ToolbarText">{`Welcome to scrabble trainer${", " + name}!`}</div>
+            <div className="ToolbarText">{`Welcome to scrabble trainer${name}!`}</div>
         </div>
         <nav className="navigation">
             <ul className="navigation-list">
