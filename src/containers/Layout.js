@@ -65,40 +65,47 @@ class Layout extends Component {
 
                 //   } else {
                 const wordListFree = [...this.state.wordListFree]
-                wordListFree.unshift(word.toLowerCase());
-                this.setState({ wordListFree })
+                word = word.toLowerCase();
+                if (wordListFree.includes(word)) {
+                    const index = wordListFree.indexOf(word);
+                    wordListFree.splice(index, 1);
+                    wordListFree.unshift(word);
+                    this.setState({ wordListFree })
+                } else {
+                    wordListFree.unshift(word.toLowerCase());
+                    this.setState({ wordListFree })
+                }
             }
-        } else {
-            if (this.state.name !== '') {
-                fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/addSevenWord`, {
-                    credentials: 'include',
-                    method: 'put',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        word: word,
-                    })
+        } else if (this.state.name !== '') {
+            fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/addSevenWord`, {
+                credentials: 'include',
+                method: 'put',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    word: word,
                 })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.hasOwnProperty('data')) {
-                            const data = [...res.data];
-                            this.setState({ wordList7: data })
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+            })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.hasOwnProperty('data')) {
+                        const data = [...res.data];
+                        this.setState({ wordListUnscramble: data })
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
 
-                //   } else {
-                const wordList7 = [...this.state.wordListUnscramble]
-                wordList7.unshift(word);
-                this.setState({ wordList7 })
-            }
+            //   } else {
+            const wordListUnscramble = [...this.state.wordListUnscramble]
+            wordListUnscramble.unshift(word);
+            this.setState({ wordListUnscramble })
+
         }
     }
 
     render() {
-        const { gameMode, wordListFree, wordList7, loading } = this.state;
+        const { gameMode, wordListFree, wordListUnscramble, loading } = this.state;
         return (
 
             <div>
@@ -113,7 +120,7 @@ class Layout extends Component {
                         gameMode === 'freestyle' ?
                             <Freestyle addWord={this.addWord} wordList={wordListFree} />
                             :
-                            <Words7 addWord={this.addWord} wordList={wordList7} />
+                            <Words7 addWord={this.addWord} wordList={wordListUnscramble} />
 
                     }
 
