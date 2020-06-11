@@ -18,7 +18,7 @@ class Layout extends Component {
     state = {
         gameMode: 'freestyle',
         wordListFree: [],
-        wordList7: [],
+        wordListUnscramble: [],
         loading: false
     }
 
@@ -49,7 +49,7 @@ class Layout extends Component {
                     method: 'put',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        word: word,
+                        word: word.toLowerCase(),
                     })
                 })
                     .then(res => res.json())
@@ -65,7 +65,7 @@ class Layout extends Component {
 
                 //   } else {
                 const wordListFree = [...this.state.wordListFree]
-                wordListFree.unshift(word);
+                wordListFree.unshift(word.toLowerCase());
                 this.setState({ wordListFree })
             }
         } else {
@@ -90,7 +90,7 @@ class Layout extends Component {
                     });
 
                 //   } else {
-                const wordList7 = [...this.state.wordList7]
+                const wordList7 = [...this.state.wordListUnscramble]
                 wordList7.unshift(word);
                 this.setState({ wordList7 })
             }
@@ -104,7 +104,7 @@ class Layout extends Component {
             <div>
                 <div className="gameMode__Buttons">
                     <Button active={gameMode === 'freestyle'} type="gameMode" text="Free-Style" onClick={() => this.setState({ gameMode: 'freestyle' })} />
-                    <Button active={gameMode === 'letters7'} type="gameMode" text="7 Letter Words" onClick={() => this.setState({ gameMode: 'letters7' })} />
+                    <Button active={gameMode === 'letters7'} type="gameMode" text="Unscramble words" onClick={() => this.setState({ gameMode: 'letters7' })} />
                 </div>
                 <div className="Scrabble__mainBody">
                     {loading ?

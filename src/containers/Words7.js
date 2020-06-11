@@ -14,11 +14,12 @@ class Words7 extends Component {
         // wordList: [], //array of all made words
         started: false,
         modalOpened: false,
+        wordLetterNum: 7  //how many letters in a word
     }
 
-    getWord = () => {
+    getWord = (number) => {
 
-        fetch(`${process.env.REACT_APP_DOMAIN}/api/words/findword7`, {
+        fetch(`${process.env.REACT_APP_DOMAIN}/api/words/findword/${number}`, {
             method: 'get',
         })
             .then(res => res.json())
@@ -89,13 +90,13 @@ class Words7 extends Component {
         this.setState({ letters: letters, rightWord: false });
     }
     enterWord = () => {
-        let { word, originalWord } = this.state;
+        let { word, originalWord, wordLetterNum } = this.state;
         word = [...this.state.word];
         word = word.join('');
         if (word === originalWord) {
             this.props.addWord(word, '');
             this.setState({ word: [], letterPosition: [], letters: [], originalWord: [], rightWord: false });
-            this.getWord();
+            this.getWord(wordLetterNum);
         }
     }
     openModal = () => {
@@ -103,14 +104,14 @@ class Words7 extends Component {
         document.onkeydown = this.checkKeyEsc;
     }
     closeModal = () => {
-        this.getWord();
+        this.getWord(this.state.wordLetterNum);
         this.setState({ modalOpened: false })
     }
     unscrambleWord = () => {
         this.openModal();
     }
     render() {
-        const { word, letters, rightWord, started, originalWord, modalOpened } = this.state;
+        const { word, letters, rightWord, started, originalWord, modalOpened, wordLetterNum } = this.state;
         return (
             modalOpened ?
                 <div className={modalOpened ? "backdrop" : "no-backdrop"}>
@@ -129,7 +130,14 @@ class Words7 extends Component {
                         <WordList words={this.props.wordList} />
                     </div>
                     <div className="Scrabble__gameField">
-                        <Button type="start" started={started} onClick={this.getWord} />
+                        <div className="letterNum">
+                            How many letters?
+                        {[...Array(3).keys()].map((index) =>
+                                <Button active={wordLetterNum === index + 5} type="gameMode" text={index + 5} onClick={() => { this.setState({ wordLetterNum: index + 5 }, this.getWord(index + 5)) }} />
+                            )}
+                        </div>
+                        {// <Button type="start" started={started} onClick={() => this.getWord(wordLetterNum)} />
+                        }
                         {
                             this.state.started
                                 ?
@@ -137,7 +145,7 @@ class Words7 extends Component {
                                     <p className="Scrabble__title"> Unscramble the word!</p>
                                     <div className="Scrabble__WordBox">
 
-                                        {[...Array(7).keys()].map((index) =>
+                                        {[...Array(word.length).keys()].map((index) =>
                                             <Button type="wordLetterCard" key={`${index.toString().concat(word[index])}`}
                                                 letter={word[index]}
                                                 onClick={() => this.removeLetterFromWord(index)} />)}
@@ -145,19 +153,20 @@ class Words7 extends Component {
                                         <Button type="enter" onClick={this.enterWord} word={word[0]} clickable={rightWord} />
                                     </div>
                                     <div className="Scrabble__LetterBox">
-                                        {[...Array(7).keys()].map((index) =>
+                                        {[...Array(letters.length).keys()].map((index) =>
                                             <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
                                                 letter={letters[index]}
                                                 onClick={() => this.putLetterToWord(index)} />)}
                                         <Button type="shuffle" onClick={this.shuffleLetters} />
                                     </div>
                                     <div>
-                                        <Button type="newGame" onClick={this.getWord} text="Get a new word!" />
+                                        <Button type="newGame" onClick={() => this.getWord(wordLetterNum)} text="Get a new word!" />
                                         <Button type="newGame" onClick={this.unscrambleWord} text="Unscramble!" />
                                     </div>
                                 </div>
                                 : ''
                         }
+
                     </div>
                 </div>
         );
