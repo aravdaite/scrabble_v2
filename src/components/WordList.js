@@ -53,7 +53,7 @@ export class WordList extends Component {
             .map((word, index) => (
                 <li className="WordList__item" key={index}>
                     <Button text={word !== null ? (typeof (word) == "string" ? word.toLowerCase() : (word.amount > 1 ? (word.word + " x" + word.amount) : word.word)) : ''}
-                        type="showMeaning" onClick={() => this.showWordDescription(word.word)} />
+                        type="showMeaning" onClick={() => { typeof (word) == "string" ? this.showWordDescription(word) : this.showWordDescription(word.word) }} />
                 </li>
             )
             )
