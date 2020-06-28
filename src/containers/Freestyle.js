@@ -239,7 +239,7 @@ class Freestyle extends Component {
                                 <div className="Scrabble__WordBox">
 
                                     {[...Array(7).keys()].map((index) =>
-                                        <Button type="wordLetterCard" key={`${index.toString().concat(word[index])}`}
+                                        <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
                                             letter={word[index]}
                                             onClick={() => this.removeLetterFromWord(index)} />)}
 

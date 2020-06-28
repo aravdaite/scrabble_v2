@@ -94,7 +94,7 @@ class Words7 extends Component {
         word = [...this.state.word];
         word = word.join('');
         if (word === originalWord) {
-            this.props.addWord(word, '');
+            this.props.addWord(word, 'unscramble');
             this.setState({ word: [], letterPosition: [], letters: [], originalWord: [], rightWord: false });
             this.getWord(wordLetterNum);
         }
@@ -107,9 +107,7 @@ class Words7 extends Component {
         this.getWord(this.state.wordLetterNum);
         this.setState({ modalOpened: false })
     }
-    unscrambleWord = () => {
-        this.openModal();
-    }
+
     render() {
         const { word, letters, rightWord, started, originalWord, modalOpened, wordLetterNum } = this.state;
         return (
@@ -133,20 +131,21 @@ class Words7 extends Component {
                         <div className="letterNum">
                             How many letters?
                         {[...Array(3).keys()].map((index) =>
-                                <Button active={wordLetterNum === index + 5} type="gameMode" text={index + 5} onClick={() => { this.setState({ wordLetterNum: index + 5 }, this.getWord(index + 5)) }} />
+                                <Button active={wordLetterNum === index + 5} type="gameMode" text={index + 5}
+                                    onClick={() => { this.setState({ wordLetterNum: index + 5 }, () => started ? this.getWord(index + 5) : "") }} />
                             )}
                         </div>
-                        {// <Button type="start" started={started} onClick={() => this.getWord(wordLetterNum)} />
+                        {<Button type="start" started={started} onClick={() => this.getWord(wordLetterNum)} />
                         }
                         {
-                            this.state.started
+                            started
                                 ?
                                 <div className="Scrabble__mainBox-started">
                                     <p className="Scrabble__title"> Unscramble the word!</p>
                                     <div className="Scrabble__WordBox">
 
                                         {[...Array(word.length).keys()].map((index) =>
-                                            <Button type="wordLetterCard" key={`${index.toString().concat(word[index])}`}
+                                            <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
                                                 letter={word[index]}
                                                 onClick={() => this.removeLetterFromWord(index)} />)}
 
@@ -161,7 +160,7 @@ class Words7 extends Component {
                                     </div>
                                     <div>
                                         <Button type="newGame" onClick={() => this.getWord(wordLetterNum)} text="Get a new word!" />
-                                        <Button type="newGame" onClick={this.unscrambleWord} text="Unscramble!" />
+                                        <Button type="newGame" onClick={this.openModal} text="Unscramble!" />
                                     </div>
                                 </div>
                                 : ''

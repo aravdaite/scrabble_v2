@@ -24,14 +24,14 @@ const getButtonType = ({ type = '', ...rest }) => {
         },
         start: {
             className: rest.started ? "Button__start-started" : "Button__start",
-            text: 'Start Game!'
+            text: rest.text ? rest.text : 'Start Game!'
         },
         letterCard: {
-            className: 'Button__LetterCard',
+            className: rest.letter ? 'Button__LetterCard' : 'Button__LetterCard-empty',
             text: rest.letter
         },
-        wordLetterCard: {
-            className: rest.letter ? "Button__WordLetterCard" : "Button__WordLetterCard-empty",
+        letterCardOponent: {
+            className: rest.letter ? rest.won ? 'Button__LetterCard' : 'Button__LetterCard oponentCard' : 'Button__LetterCard-empty',
             text: rest.letter
         },
         submit: {

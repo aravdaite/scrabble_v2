@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Definitions, Spinner } from '../components'
-import { getWordData, getWordDataOxford } from '../containers/Freestyle'
+import { getWordDataOxford } from '../containers/Freestyle'
 
 export class WordList extends Component {
     state = {

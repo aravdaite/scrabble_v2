@@ -4,6 +4,13 @@
   background-color: black;
   padding: 10px;
 }
+.textWhite{
+  color:white;
+}
+.textWhite.size28{
+  font-size: 28px;
+  margin: 0 0 15% 0;
+}
 .open{
   height: 50px;
   width: 50px;
@@ -257,7 +264,6 @@ flex-direction: row;
   border-radius: 45px;
   width: 300px;
   height: 100px;
-
 }
 .Button__start:hover{
   background-color: rgb(255, 73, 109);
@@ -312,24 +318,31 @@ cursor: pointer;
   width: 500px;
   height: 100px;
 }
-.Button__WordLetterCard{
+.Scrabble__WordBox.oponentBox{
+  border-top: 2px solid;
+  border-bottom: 0;
+  border-color: white;
+  align-items: flex-start;
+}
+.Button__LetterCard{
   display: block;
   text-align: center;
-  height: auto;
-  width: auto;
-  background-color: rgb(245, 206, 213);
-  border-bottom: 2px solid;
-  border-color: white;
-  margin: 10px 0 10px 0;
-  padding: 10px 10px 0 10px;
-  color: rgb(66, 153, 146);
   font-size: 36px;
   font-weight: 700;
+  line-height: 80px;
+  color: rgb(66, 150, 153);
+  height: 80px;
+  width: 80px;
+  background-color: rgb(242, 247, 174);
+  border: 1px solid;
+  border-color: white;
   cursor: pointer;
-  border-top: none;
-  border-right: none;
-  border-left: none;
   text-transform: uppercase;
+  margin: 2px;
+}
+.Button__LetterCard.oponentCard{
+  color: rgb(242, 247, 174);
+  cursor: default;
 }
 .example-enter {
   opacity: 0.01;
@@ -352,11 +365,8 @@ cursor: pointer;
   width: 0px;
   transition: 700ms;
 }
-.Button__WordLetterCard:hover{
-  font-size: 42px;
-}
 
-.Button__WordLetterCard-empty{
+.Button__LetterCard-empty{
   display: none;
 }
 .Button__enter{
@@ -400,24 +410,9 @@ cursor: pointer;
 .Scrabble__LetterBox{
   display: flex;
   flex-direction: row;
-  border: 2px solid white;
-  
+
 }
-.Button__LetterCard{
-  display: block;
-  text-align: center;
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 80px;;
-  color: rgb(66, 150, 153);
-  height: 80px;
-  width: 80px;
-  background-color: rgb(242, 247, 174);
-  border: 1px solid;
-  border-color: white;
-  cursor: pointer;
-  text-transform: uppercase;
-}
+
 .Button__LetterCard:hover{
   font-size: 42px;
 }
@@ -521,14 +516,13 @@ padding: 0;
 
 @media only screen and (max-width: 850px) {
   .Button__start{
-    margin: 40% 0 0 0;
+    margin:auto  0;
 }
   .letterNum{
     flex-direction: row;
     justify-content: center;
     width: 100%;
-background-color:pink;
-    order: 1;
+    background-color:pink;
   }
   .row{  
     flex-direction: column;
@@ -551,10 +545,15 @@ background-color:pink;
     width: 50px;
     height: 50px;
   }
+  .Button__LetterCard-oponent{
+    line-height: 20px;
+    width: 50px;
+    height: 50px;
+  }
   .Scrabble__WordBox{
-    width: 80%;
-    min-height: 80px;
+    height: 80px;
     margin: 20px 0;
+    width: 100%;
   }
 .Register{
 height: auto;
@@ -577,7 +576,10 @@ flex: 1;
 }
 }
 @media only screen and (max-width: 650px) {
-
+  .textWhite.size28{
+    font-size: 18px;
+    margin: 0;
+  }
 
   .logo-image{
       height: 64px;
@@ -598,6 +600,7 @@ flex: 1;
       order: 1;
       min-height: 60vh;
       min-width: 320px;
+      padding: 0 0 5px 0;
   }
   .WordList{
     display: flex;
@@ -640,8 +643,8 @@ flex: 1;
 
   .Scrabble__mainBox-started{
       width: 90%;
-      height: 50vh;
-      padding: 0 0 10% 0;
+      min-height: 50vh;
+      padding: 0;
   }
   .Scrabble__mainBox{
       width: 90%;
@@ -650,23 +653,21 @@ flex: 1;
   .Scrabble__title{
       font-size: 24px;
   }
-  
-  .Scrabble__WordBox{
-      width: 100%;
-  }
-  .Button__WordLetterCard{
-      width: auto;
-      font-size: 24px;
-  }
-  .Button__WordLetterCard:hover{
-      font-size: 24px;
-  }
 
+  .Button__LetterCard-oponent{
+    font-size: 24px;
+    line-height: 40px;
+    height: 40px;
+    width: 40px;
+  }
+ 
   .Button__enter{
       font-size: 18px;
+      margin: 0 2px;
   }
   .Button__enter-green{
       font-size: 18px;
+      margin: 0 2px;
   }
   
   .Scrabble__LetterBox{
@@ -693,13 +694,23 @@ flex: 1;
 
 }
 @media only screen and (max-width: 365px) {
+  .Scrabble__title{
+    font-size: 24px;
+    margin: 5px;
+}
   .Button__LetterCard{
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     line-height: 19px;
+
   }
-  .Button__WordLetterCard{
+  .Button__LetterCard-oponent{
+    min-width: 35px;
+    height: 35px;
+    line-height: 19px;
+    margin: 14px 2px;
     padding: 7px;
+    margin: 2px;
   }
   .Button__enter-green:hover{
     font-size: 22px;
@@ -707,4 +718,16 @@ flex: 1;
   .Button__LetterCard:hover{
     font-size: 42px;
   }
+  .NavigationItem-button{
+    font-size: 16px;
+}
+.Button__enter{
+  margin: 0 2px;
+}
+.Scrabble__WordBox{
+  height: 50px;
+  margin: 20px ;
+  width: 100%;
+  padding: 10px;
+}
 }

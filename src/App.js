@@ -57,7 +57,7 @@ class App extends Component {
       <div className="body" >
         <BrowserRouter>
           <Toolbar name={name !== "" ? ", " + name : ""} login={logedIn} />
-          <Route exact path="/" component={Layout} />
+          <Route exact path="/"  ><Layout name={name !== "" ? name : ""} /></Route >
           <Route exact path="/me" component={Me} />
           <Route path="/about" component={About} />
           <Route path="/register" component={Register} />
