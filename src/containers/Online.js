@@ -25,6 +25,8 @@ class Words7 extends Component {
         wins: 0,
         oponentWins: 0,
     }
+
+
     componentWillUnmount() {
         socket.emit("leave", { room: roomNo });
     }
@@ -267,6 +269,9 @@ class Words7 extends Component {
 
     render() {
         const { gameState, modalOpened } = this.state;
+        window.addEventListener("beforeunload", (ev) => {
+            socket.emit("leave", { room: roomNo })
+        });
         return (
             /* modalOpened ?
                  <div className={modalOpened ? "backdrop" : "no-backdrop"}>
