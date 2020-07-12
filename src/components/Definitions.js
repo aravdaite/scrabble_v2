@@ -9,7 +9,7 @@ export const Definitions = ({ definitions = [], categories = [], onClick }) => {
                 <Button type="exit" onClick={onClick} />
                 <ul className="Definitions__ul1"><strong className="Definitions__strong">Definitions:</strong>
                     {definitions.map((def, index) => (
-                        <li key={def.slice(0, 10)}>
+                        <li key={def.slice(0, 10).concat(index)}>
                             <strong className="Definitions__strong"> {categories[index]}</strong>
                             <ul className="Definitions__ul2">
                                 {def.map(de => (

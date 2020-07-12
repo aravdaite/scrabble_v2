@@ -1,0 +1,315 @@
+.logout {
+  font-size:24px;
+  text-decoration:none;
+  color:#fff;
+  background-color:#ffc0cb;
+  border:none;
+  padding:0;
+  margin:5px 20px 0;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+  
+  .logout:hover {
+  cursor:pointer;
+  text-decoration:underline;
+  }
+  
+  .showMeaning {
+  font-size:18px;
+  color:#fff;
+  border:0;
+  height:auto;
+  width:auto;
+  background-color:#f57e94;
+  border-radius:45px;
+  margin:0 0 0 10px;
+  padding:5px 20px;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+  
+  .showMeaning:hover {
+  background-color:#ff496d;
+  box-shadow:0 1px 2px 0 rgba(0,0,0,0.24),0 5px 5px 0 rgba(0,0,0,0.19);
+  cursor:pointer;
+  }
+  
+  .exit {
+  position:sticky;
+  top:10px;
+  float:right;
+  background-color:#ffc0cb;
+  border:2px solid #fff;
+  color:#fff;
+  margin:10px;
+  border-radius:4px;
+  cursor:pointer;
+  width:30px;
+  height:30px;
+  font-weight:700;
+  }
+  
+  .start {
+  font-size:46px;
+  color:#fff;
+  border:2px solid #fff;
+  height:25%;
+  width:20%;
+  background-color:#f57e94;
+  border-radius:45px;
+  width:300px;
+  height:100px;
+  }
+  
+  .start:hover {
+  background-color:#ff496d;
+  box-shadow:0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  cursor:pointer;
+  }
+  
+  .start.started {
+  display:none;
+  }
+  
+  .gameMode {
+  font-size:18px;
+  color:#fff;
+  border:0;
+  height:auto;
+  width:auto;
+  background-color:#f57e94;
+  border-radius:3px;
+  margin:0 10px;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+  
+  .gameMode.active {
+  background-color:#e94062;
+  }
+  
+  .gameMode:hover {
+  cursor:pointer;
+  }
+  
+  .letterCard {
+  display:block;
+  text-align:center;
+  font-size:36px;
+  font-weight:700;
+  line-height:80px;
+  color:#429699;
+  height:80px;
+  width:80px;
+  background-color:#f2f7ae;
+  border:1px solid;
+  border-color:#fff;
+  cursor:pointer;
+  text-transform:uppercase;
+  margin:2px;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+  
+  .letterCard.oponentCard {
+  color:#f2f7ae;
+  cursor:default;
+  }
+  
+  .letterCard.empty {
+  display:none;
+  }
+  
+  .enter {
+  display:block;
+  margin:10px;
+  padding:10px;
+  font-size:26px;
+  color:#fff;
+  border:0;
+  height:auto;
+  width:auto;
+  background-color:#f57e7e;
+  border-radius:45px;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+  
+  .enter.green {
+  background-color:#9cce97;
+  }
+  
+  .enter.green:hover {
+  cursor:pointer;
+  background-color:#5aaf4d;
+  box-shadow:0 1px 2px 0 rgba(0,0,0,0.24),0 5px 5px 0 rgba(0,0,0,0.19);
+  font-size:28px;
+  margin:7px;
+  }
+  
+  .enter:hover {
+  background-color:#f74141;
+  }
+  
+  .enter.none {
+  display:none;
+  }
+  
+  .letterCard:hover {
+  font-size:42px;
+  }
+  
+  .shuffle {
+  font-size:28px;
+  color:#fff;
+  background-color:#f57e94;;
+  outline: 1px;
+  border: white;
+  -moz-outline-style: none;
+  }
+  
+  @media (hover: hover) {
+    .shuffle:hover {
+      background-color:#e94062;
+      cursor:pointer;
+      }
+  }
+  
+  .newGame {
+  font-size:24px;
+  color:#fff;
+  border:2px solid #fff;
+  height:15%;
+  width:auto;
+  background-color:#f57e94;
+  border-radius:45px;
+  margin:8px;
+  padding:10px;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+  
+  .newGame:hover {
+  background-color:#ff496d;
+  box-shadow:0 4px 5px 0 rgba(0,0,0,0.24),0 4px 5px 0 rgba(0,0,0,0.19);
+  cursor:pointer;
+  }
+  
+  .submit {
+  font-size:18px;
+  color:#fff;
+  border:0;
+  height:auto;
+  width:auto;
+  background-color:#ff496d;
+  border-radius:3px;
+  margin:10px 0;
+  }
+  
+  @media only screen and (max-width: 850px) {
+  .start {
+  margin:auto 0;
+  }
+  
+  .letterCard {
+  line-height:20px;
+  width:50px;
+  height:50px;
+  }
+  
+  .letterCard-oponent {
+  line-height:20px;
+  width:50px;
+  height:50px;
+  }
+  
+  .showMeaning {
+  margin:0;
+  }
+  }
+  
+  @media only screen and (max-width: 650px) {
+  .start {
+  font-size:20px;
+  height:10vh;
+  width:50%;
+  }
+  
+  .logout {
+  font-size:18px;
+  }
+  
+  .letterCard-oponent {
+  font-size:24px;
+  line-height:40px;
+  height:40px;
+  width:40px;
+  }
+  
+  .enter {
+  font-size:18px;
+  margin:0 2px;
+  }
+  
+  .enter-green {
+  font-size:18px;
+  margin:0 2px;
+  }
+  
+  .shuffle {
+  font-size:16px;
+  line-height: 32px;
+  }
+  
+  .newGame {
+  font-size:18px;
+  height:auto;
+  }
+
+  .letterCard{
+  font-size: 24px;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  }
+  }
+  
+  @media only screen and (max-width: 365px) {
+  .letterCard {
+  width:35px;
+  height:35px;
+  line-height:19px;
+  }
+  
+  .letterCard-oponent {
+  min-width:35px;
+  height:35px;
+  line-height:19px;
+  margin:14px 2px;
+  padding:7px;
+  margin:2px;
+  }
+  
+  .enter.green:hover {
+  font-size:22px;
+  }
+  
+  .letterCard:hover {
+  font-size:42px;
+  }
+  
+  .logout {
+  font-size:16px;
+  }
+  
+  .enter {
+  margin:0 2px;
+  }
+  }

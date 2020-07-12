@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Button, WordList } from '../components';
+import { Button, WordList, Spinner, Counter } from '../components';
 import { shuffle, removeFromArray } from './Freestyle';
 import socketIOClient from "socket.io-client";
 
 let socket = socketIOClient(process.env.REACT_APP_DOMAIN);
 let roomNo = "";
-let player = 0;
 
 class Words7 extends Component {
 
@@ -16,7 +15,7 @@ class Words7 extends Component {
         letterPosition: [], //from which position the letter was added to form a word, so it can be returned to the same position
         letters: [], //mixed letters
         rightWord: false, //has the player unscrabled the wirte word?
-        originalWord: "", //original word that the palywrs are trying to unscramble
+        originalWord: "", //original word that the players are trying to unscramble
         // wordList: [], //array of all made words
         modalOpened: false,
         wordLetterNum: 7,  //how many letters in a word
@@ -24,67 +23,87 @@ class Words7 extends Component {
         validated: false, //game over?
         wins: 0,
         oponentWins: 0,
+        spinner: false
     }
 
+    checkKey = (e) => {
+        const { letters, word } = this.state
 
+        if (word !== 0) {
+            if (e.keyCode === 8) {
+                this.removeLetterFromWord(word.length - 1);
+            }
+            if (e.keyCode === 46) {
+                this.removeLetterFromWord(0);
+            }
+            else if (e.keyCode === 13) {
+                e.preventDefault();
+                this.enterWord();
+            }
+        }
+        for (let i = 65; i < 91; i++) {
+            if (e.keyCode === i && letters.includes(String.fromCharCode(i))) {
+                const index = letters.indexOf(String.fromCharCode(i));
+                this.putLetterToWord(index);
+            }
+        }
+    }
+    //make sure player is disconnected from the game propertly
     componentWillUnmount() {
         socket.emit("leave", { room: roomNo });
     }
     componentDidMount() {
+        document.onkeydown = this.checkKey;
         //check if the oponent made a move and update oponen't cards
         socket.on("word", data => {
-            console.log("word", data)
             this.setState({ oponentWord: data });
         });
         socket.on("letters", data => {
-            console.log("letters", data)
             this.setState({ oponentLetters: data }, () => console.log(this.state.oponentLetters, this.state.oponentWord));
         });
 
         //check if oponent has won
         socket.on("status", data => {
             const { oponentWins } = this.state
-            this.setState({ gameState: "oponentFound", validated: true, oponentWins: (oponentWins + 1), modalOpened: true }, console.log("oponent won", this.state.validated))
+            this.setState({ gameState: "oponentWon", validated: true, oponentWins: (oponentWins + 1), modalOpened: true })
+            setTimeout(() => this.setState({ gameState: "oponentFound", modalOpened: true }), 3000);
         });
 
         //start a new game after losing
         socket.on("newWord", data => {
-            console.log(data)
             const arr = [...Array.from(data.word[0].words)]
+            console.log(arr)
             shuffle(arr);
-            this.setState({
-                gameState: "oponentFound", validated: false,
-                oponentLetters: arr, oponentWord: [],
-                originalWord: data.word[0].words, letters: arr,
-                word: [], letterPosition: [], rightWord: false
-            })
+
+            this.setState({ gameState: "getReady", modalOpened: true });
+            setTimeout(this.restartGame, 3500, arr, data);
         });
 
         //be prompted that other player disconnected
         socket.on("oponentLeft", data => {
             this.setState({
-                gameState: "started", oponentLetters: [], oponentWord: [], originalWord: [],
+                gameState: "oponentDisconnected", oponentLetters: [], oponentWord: [], originalWord: "",
                 letters: [], word: [], letterPosition: [], rightWord: false, modalOpened: true
             });
-
         })
     }
 
     //start game and get the first word
     startGame = (number) => {
-        console.log("start runs")
         if (this.state.gameState === "notStarted") {
+            this.setState({ spinner: true });
             this.setState({ gameState: "oponentFound" }, () => {
                 //join existing room as player2
                 socket.emit("joinGame", "playerName");
                 socket.on("player", data => {
                     if (data) {
-                        console.log("player start game", data)
                         roomNo = data.room;
-                        const arr = [...Array.from(data.word[0].words)]
+                        const arr = [...Array.from(data.word[0].words.toUpperCase())]
+                        console.log(arr)
                         shuffle(arr);
+
                         this.setState({
-                            gameState: "oponentFound",
+                            gameState: "oponentFound", spinner: false,
                             oponentLetters: arr, originalWord: data.word[0].words,
                             letters: arr, word: [], letterPosition: [], rightWord: false, validated: false
                         });
@@ -93,22 +112,27 @@ class Words7 extends Component {
             });
             //cannot join an existing room? create a new game room and join as player1
             socket.on("err", data => {
-                this.setState({ gameState: "started" }, () => {
-                    if (data === 'Sorry, The room is full!' && !this.state.oponent) {
-                        socket.emit("createGame", "playerName");
-                        socket.on("newGame", data => {
-                            roomNo = data.room;
-
-                        })
-                    }
-                });
+                if (data === 'Sorry, The room is full!' && !this.state.oponent) {
+                    socket.emit("createGame", "playerName");
+                    socket.on("newGame", data => {
+                        roomNo = data.room;
+                    })
+                }
+                this.setState({ gameState: "started", spinner: false });
             })
         }
     }
     //restart game
     getNewWord = () => {
-        console.log("runs get new word")
         socket.emit("newWord", roomNo);
+    }
+    restartGame = (arr, data) => {
+        this.setState({
+            gameState: "oponentFound", validated: false,
+            oponentLetters: arr, oponentWord: [],
+            originalWord: data.word[0].words, letters: arr,
+            word: [], letterPosition: [], rightWord: false
+        })
     }
     putLetterToWord = (index) => {
         if (this.state.validated === false) {
@@ -155,10 +179,9 @@ class Words7 extends Component {
     }
     //check if it's correct word
     validateWord = (word) => {
-        const word2 = word.join('');
+        const word2 = word.join('').toLowerCase();
         if (word2 === this.state.originalWord) {
             this.setState({ rightWord: true });
-
         } else {
             this.setState({ rightWord: false });
         }
@@ -184,14 +207,12 @@ class Words7 extends Component {
     enterWord = () => {
         let { word, originalWord, wins } = this.state;
         word = [...this.state.word];
-        word = word.join('');
+        word = word.join('').toLowerCase();
         if (word === originalWord) {
 
             this.props.addWord(word, 'online');
-            this.setState({
-                validated: true, wins: (wins + 1)
-
-            });
+            this.setState({ validated: true, wins: (wins + 1), gameState: "youWon", modalOpened: true });
+            setTimeout(() => this.setState({ gameState: "oponentFound", modalOpened: true }), 3000);
             //this.getWord(wordLetterNum);
             socket.emit("won", { room: roomNo, message: "The PlayerName has won" });
         }
@@ -202,13 +223,17 @@ class Words7 extends Component {
         document.onkeydown = this.checkKeyEsc;
     }
     closeModal = () => {
+        let nextState;
+        const { gameState } = this.state;
+        gameState === "oponentDisconnected" ? nextState = "started" : nextState = "oponentFound";
         //this.getWord(this.state.wordLetterNum);
-        this.setState({ modalOpened: false })
+        this.setState({ modalOpened: false, gameState: nextState })
     }
 
-
     getGameState = (state) => {
-        const { word, letters, rightWord, oponentLetters, oponentWord, validated, oponentWins, wins, modalOpened } = this.state;
+        const { word, letters, rightWord, oponentLetters, originalWord,
+            oponentWord, validated, oponentWins, wins, modalOpened } = this.state;
+
         const gameState = {
             notStarted:
             <Button type="start" text="Start" started={false} onClick={() => this.startGame()} />
@@ -223,92 +248,103 @@ class Words7 extends Component {
                 <p className="Scrabble__title"> Oponent: {this.props.name}</p>
 
                 <div className="Scrabble__LetterBox">
-                    {[...Array(oponentLetters.length).keys()].map((index) =>
-                        <Button type="letterCardOponent" won={validated} key={`${index.toString().concat(word[index])}`}
-                            letter={oponentLetters[index]}
-                        />)}
+                    {//oponent letter cards
+                        [...Array(oponentLetters.length).keys()].map((index) =>
+                            <Button type="letterCardOponent" won={validated} key={`${index.toString().concat(word[index])}`}
+                                letter={oponentLetters[index]}
+                            />)}
                 </div>
                 <div className="Scrabble__WordBox oponentBox">
 
-                    {[...Array(oponentWord.length).keys()].map((index) =>
-                        <Button type="letterCardOponent" won={validated} key={`${index.toString().concat(word[index])}`}
-                            letter={oponentWord[index]}
-                        />)}
+                    {//oponent made up word
+                        [...Array(oponentWord.length).keys()].map((index) =>
+                            <Button type="letterCardOponent" won={validated} key={`${index.toString().concat(word[index])}`}
+                                letter={oponentWord[index]}
+                            />)}
                 </div>
                 <p className="Scrabble__title"> Unscramble the word!</p>
                 <div className="Scrabble__WordBox">
 
-                    {[...Array(word.length).keys()].map((index) =>
-                        <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
-                            letter={word[index]}
-                            onClick={() => this.removeLetterFromWord(index)} />)}
+                    {//player's made up word
+                        [...Array(word.length).keys()].map((index) =>
+                            <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
+                                letter={word[index]}
+                                onClick={() => this.removeLetterFromWord(index)} />)}
                     {validated ? '' : <Button type="enter" onClick={this.enterWord} word={word[0]} clickable={rightWord} />}
                 </div>
                 <div className="Scrabble__LetterBox">
-                    {[...Array(letters.length).keys()].map((index) =>
-                        <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
-                            letter={letters[index]}
-                            onClick={() => this.putLetterToWord(index)} />)}
+                    {//player's letter cards
+                        [...Array(letters.length).keys()].map((index) =>
+                            <Button type="letterCard" key={`${index.toString().concat(word[index])}`}
+                                letter={letters[index]}
+                                onClick={() => this.putLetterToWord(index)} />)}
                     {validated ? ""
                         : <Button type="shuffle" onClick={this.shuffleLetters} />}
                 </div>
                 {validated ? <Button type="start" text="Play again!" started={false} onClick={() => this.getNewWord()} />
                     : ""}
             </div>,
-            oponentWon: <div className={modalOpened ? "backdrop" : "no-backdrop"}>
+            oponentWon:
+            <div className={modalOpened ? "backdrop" : "no-backdrop"}>
                 <div className="Unscrambled">
                     <div className="Unscrambled-data">
                         <strong className="Definitions__strong">Oponent Won!</strong>
+                        <strong className="Definitions__strong">{originalWord.toUpperCase()}</strong>
                     </div>
                     <Button type="exit" onClick={() => this.closeModal()} />
                 </div>
-            </div>
+
+            </div>,
+            youWon:
+            <div className={modalOpened ? "backdrop" : "no-backdrop"}>
+                <div className="Unscrambled">
+                    <div className="Unscrambled-data">
+                        <strong className="Definitions__strong">You won!</strong>
+                    </div>
+                    <Button type="exit" onClick={() => this.closeModal()} />
+                </div>
+            </div>,
+            oponentDisconnected:
+            <div className={modalOpened ? "backdrop" : "no-backdrop"}>
+                <div className="Unscrambled">
+                    <div className="Unscrambled-data">
+                        <strong className="Definitions__strong">Oponent has disconnected!</strong>
+                    </div>
+                    <Button type="exit" onClick={() => this.closeModal()} />
+                </div>
+            </div>,
+            getReady:
+            <div className={modalOpened ? "backdrop" : "no-backdrop"}>
+                <div className="Unscrambled">
+                    <div className="Unscrambled-data">
+                        <p>Get ready!</p>
+                        <Counter />
+                    </div>
+                </div>
+            </div>,
         }
         return gameState[state] || {}
     }
 
     render() {
-        const { gameState, modalOpened } = this.state;
+        const { gameState, modalOpened, spinner } = this.state;
+
         window.addEventListener("beforeunload", (ev) => {
             socket.emit("leave", { room: roomNo })
         });
         return (
-            /* modalOpened ?
-                 <div className={modalOpened ? "backdrop" : "no-backdrop"}>
-                     <div className="Unscrambled">
-                         <div className="Unscrambled-data">
-                             <strong className="Definitions__strong">Unscrambled word:</strong>
-                             {originalWord}
-                         </div>
-                         <Button type="exit" onClick={() => this.closeModal()} />
-                     </div>
-                 </div>
-                 :*/
-
-            modalOpened ?
-                <div className={modalOpened ? "backdrop" : "no-backdrop"}>
-                    <div className="Unscrambled">
-                        <div className="Unscrambled-data">
-                            <strong className="Definitions__strong">Unscrambled word:</strong>
-                            {gameState === "oponentFound" ?
-                                <p>Oponent Won!</p>
-                                : <p>Oponent has disconnected</p>
-                            }
-                        </div>
-                        <Button type="exit" onClick={() => this.closeModal()} />
-                    </div>
-
+            <div className="Scrabble__mainBody" >
+                <div className="WordList" >
+                    <h3>Words You've Made! </h3>
+                    <WordList words={this.props.wordList} />
                 </div>
-                :
-                <div className="Scrabble__mainBody" >
-                    <div className="WordList" >
-                        <h3>Words You've Made! </h3>
-                        <WordList words={this.props.wordList} />
-                    </div>
-                    <div className="Scrabble__gameField">
-                        {this.getGameState(gameState)}
-                    </div>
+                <div className="Scrabble__gameField">
+                    {spinner ?
+                        <Spinner />
+                        :
+                        this.getGameState(gameState)}
                 </div>
+            </div>
         );
     };
 }

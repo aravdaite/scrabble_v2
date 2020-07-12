@@ -1,3 +1,12 @@
+.counter{
+  color: white;
+  size: 24px;
+}
+.getReady{
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
 .closed{
   height: 50px;
   width: 50px;
@@ -6,6 +15,9 @@
 }
 .textWhite{
   color:white;
+}
+.howMany{
+  margin: 0;
 }
 .textWhite.size28{
   font-size: 28px;
@@ -49,25 +61,13 @@
   text-decoration: none;
   color: white;
 }
-.NavigationItem-button:hover{
-  cursor: pointer;
-  text-decoration: underline;
-}
+
 .NavigationItem:hover{
   cursor: pointer;
   text-decoration: underline;
 }
 
-.NavigationItem-button{
-  font-size: 24px;
-  text-decoration: none;
-  color: white;
-background-color: pink; 
-border: none;
-padding: 0;
-margin: 5px 20px 0 20px;
 
-}
 .NavigationItem-active{
   font-size: 24px;
   margin: 10px 20px;
@@ -156,22 +156,7 @@ h3{
   font-size: 18px;
   margin: 10px;
 }
-.Button__ShowMeaning{
-  font-size: 18px;
-  color: white;
-  border: 0;
-  height: auto;
-  width: auto;
-  background-color: rgb(245, 126, 148);
-  border-radius: 45px;
-  margin: 0 0 0 10px;
-  padding: 5px 20px;
-}
-.Button__ShowMeaning:hover{
-  background-color: rgb(255, 73, 109);
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
-  cursor: pointer;
-}
+
 .backdrop{
   display: flex;
   align-items: center;
@@ -212,20 +197,7 @@ h3{
 .Definitions__ul2 {
   padding: 0 0 0 20px;
 }
-.Button__exit{
-  position: sticky;
-  top: 10px;
-  float:right;
-  background-color: pink;
-  border: 2px solid white;
-  color: white;
-  margin: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  font-weight: 700;
-}
+
 .Unscrambled{
   display: flex;
   flex-direction: row;
@@ -246,7 +218,7 @@ display: flex;
 flex-direction: row;
   color: white;
   font-size: 22px;
-  padding: 0 0 5% 0;
+  padding: 4% 0;
 }
 .Scrabble__mainBox-started{
     display: flex;
@@ -254,54 +226,12 @@ flex-direction: row;
     align-items: center;
     width: 70%;
   }
-.Button__start{
-  font-size: 46px;
-  color: white;
-  border: 2px solid white;
-  height: 25%;
-  width: 20%;
-  background-color: rgb(245, 126, 148);
-  border-radius: 45px;
-  width: 300px;
-  height: 100px;
-}
-.Button__start:hover{
-  background-color: rgb(255, 73, 109);
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  cursor: pointer;
-}
 
-.Button__start-started{
-  display: none;
-
-}
-.gameMode__Buttons{
+.Layout__Buttons{
   display: flex;
   justify-content: center;
 }
-.Button__gameMode{
-  font-size: 18px;
-  color: white;
-  border: 0;
-  height: auto;
-  width: auto;
-  background-color: rgb(245, 126, 148);
-  border-radius: 3px;
-  margin: 10px;
-}
-.Button__gameMode-active{
-  font-size: 18px;
-  color: white;
-  border: 0;
-  height: auto;
-  width: auto;
-  background-color: rgb(233, 64, 98);
-  border-radius: 3px;
-  margin: 10px;
-}
-.Button__gameMode:hover{
-cursor: pointer;
-}
+
 .Scrabble__title{
   color: white;
   font-size: 36px;
@@ -324,26 +254,7 @@ cursor: pointer;
   border-color: white;
   align-items: flex-start;
 }
-.Button__LetterCard{
-  display: block;
-  text-align: center;
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 80px;
-  color: rgb(66, 150, 153);
-  height: 80px;
-  width: 80px;
-  background-color: rgb(242, 247, 174);
-  border: 1px solid;
-  border-color: white;
-  cursor: pointer;
-  text-transform: uppercase;
-  margin: 2px;
-}
-.Button__LetterCard.oponentCard{
-  color: rgb(242, 247, 174);
-  cursor: default;
-}
+
 .example-enter {
   opacity: 0.01;
   width: 0px;
@@ -366,46 +277,7 @@ cursor: pointer;
   transition: 700ms;
 }
 
-.Button__LetterCard-empty{
-  display: none;
-}
-.Button__enter{
-  display: block;
-  margin: 10px;
-  padding: 10px;
-  font-size: 26px;
-  color: white;
-  border: 0;
-  height: auto;
-  width: auto;
-  background-color: rgb(245, 126, 126);
-  border-radius: 45px;
-}
-.Button__enter-green{
-  display: block;
-  margin: 10px;
-  padding: 10px;
-  font-size: 26px;
-  color: white;
-  border: 0;
-  height: auto;
-  width: auto;
-  background-color: rgb(156, 206, 151);
-  border-radius: 45px;
-}
-.Button__enter-green:hover{
-  cursor: pointer;
-  background-color: rgb(90, 175, 77);
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
-  font-size: 28px;
-  margin: 7px;
-}
-.Button__enter:hover{
-  background-color: rgb(247, 65, 65);
-}
-.Button__enter-none{
-  display: none;
-}
+
 
 .Scrabble__LetterBox{
   display: flex;
@@ -413,34 +285,6 @@ cursor: pointer;
 
 }
 
-.Button__LetterCard:hover{
-  font-size: 42px;
-}
-.Button__shuffle{
-  font-size: 28px;
-  color: white;
-  background-color: pink;
-}
-.Button__shuffle:hover{
-background-color: rgb(250, 112, 140);
-cursor: pointer;
-}
-.Button__newGame{
-  font-size: 24px;
-  color: white;
-  border: 2px solid white;
-  height: 25%;
-  width: auto;
-  background-color: rgb(245, 126, 148);
-  border-radius: 45px;
-  margin: 8px;
-  padding: 10px;
-}
-.Button__newGame:hover{
-  background-color: rgb(255, 73, 109);
-  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.24), 0 4px 5px 0 rgba(0,0,0,0.19);
-  cursor: pointer;
-}
 .Register{
   display: flex;
   flex-direction: column;
@@ -490,6 +334,12 @@ color: white;
 padding: 0;
 }
 .Me__input{
+  padding-bottom: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: solid 2px #1059FF;
+  transition: all .25s ease;
+  cursor: pointer;
   height: 30px;
   width: 200px;
   margin: 10px 0;
@@ -503,21 +353,10 @@ padding: 0;
   height: auto;
   padding: 50px;
 }
-.Button__submit{
-  font-size: 18px;
-  color: white;
-  border: 0;
-  height: auto;
-  width: auto;
-  background-color: pink;
-  border-radius: 3px;
-  margin: 10px 0;
-}
+
 
 @media only screen and (max-width: 850px) {
-  .Button__start{
-    margin:auto  0;
-}
+
   .letterNum{
     flex-direction: row;
     justify-content: center;
@@ -539,17 +378,6 @@ padding: 0;
   ul{
     padding: 0;
   }
-
-  .Button__LetterCard{
-    line-height: 20px;
-    width: 50px;
-    height: 50px;
-  }
-  .Button__LetterCard-oponent{
-    line-height: 20px;
-    width: 50px;
-    height: 50px;
-  }
   .Scrabble__WordBox{
     height: 80px;
     margin: 20px 0;
@@ -560,9 +388,7 @@ height: auto;
 padding: 5vh 0 10px 0;
 flex: 1;
 }
-.Button__ShowMeaning{
-  margin: 0;
-}
+
 .WordList__item {
   padding: 0;
 }
@@ -591,22 +417,18 @@ flex: 1;
       height: auto;
   }
 
-  .Button__start{
-      font-size: 20px;
-      height: 10vh;
-      width: 50%;
-  }
   .Scrabble__gameField{
       order: 1;
-      min-height: 60vh;
-      min-width: 320px;
-      padding: 0 0 5px 0;
+      min-height: 50vh;
+      width: 100%;
+      margin: 5px 0 0 0;
+      padding: 0 0 10px 0;
   }
   .WordList{
     display: flex;
     flex-direction: column;
     align-items: center;
-      padding: 10px 0 0 10px;
+      padding: 0 0 0 10px;
       margin: 0;
       order: 2;
       width: auto;
@@ -628,9 +450,7 @@ flex: 1;
   .NavigationItem{
       font-size: 18px;
   }
-  .NavigationItem-button{
-    font-size: 18px;
-}
+
 
   .navigation{
     justify-content: center;
@@ -654,80 +474,24 @@ flex: 1;
       font-size: 24px;
   }
 
-  .Button__LetterCard-oponent{
-    font-size: 24px;
-    line-height: 40px;
-    height: 40px;
-    width: 40px;
-  }
- 
-  .Button__enter{
-      font-size: 18px;
-      margin: 0 2px;
-  }
-  .Button__enter-green{
-      font-size: 18px;
-      margin: 0 2px;
-  }
-  
   .Scrabble__LetterBox{
       width: auto;     
   }
-  .Button__LetterCard{
-      font-size: 24px;
-      line-height: 40px;
-      height: 40px;
-      width: 40px;
-  }
 
-  .Button__shuffle{
-      font-size: 16px;
-  }
-
-  .Button__newGame{
-      font-size: 18px;
-      height: auto;
-  }
   .Definitions {
       max-width: 95%;
   }
-
 }
 @media only screen and (max-width: 365px) {
   .Scrabble__title{
     font-size: 24px;
     margin: 5px;
 }
-  .Button__LetterCard{
-    width: 35px;
-    height: 35px;
-    line-height: 19px;
-
-  }
-  .Button__LetterCard-oponent{
-    min-width: 35px;
-    height: 35px;
-    line-height: 19px;
-    margin: 14px 2px;
-    padding: 7px;
-    margin: 2px;
-  }
-  .Button__enter-green:hover{
-    font-size: 22px;
-  }
-  .Button__LetterCard:hover{
-    font-size: 42px;
-  }
-  .NavigationItem-button{
-    font-size: 16px;
-}
-.Button__enter{
-  margin: 0 2px;
-}
+ 
 .Scrabble__WordBox{
   height: 50px;
   margin: 20px ;
   width: 100%;
-  padding: 10px;
+  padding: 0;
 }
 }

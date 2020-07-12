@@ -3,17 +3,7 @@ import { Button, WordList } from '../components';
 
 const vowels = 'AEIOUY';
 const consonants = 'BCDFGHJKLMNPQRSTVWXZ';
-const key = "ee45ee9d-510f-4b5e-81f1-7bb7f90d3ffe";
 
-export const getWordData = (word) => {
-    return fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${key}`, {
-        method: 'get'
-    })
-        .then(res => res.json())
-        .catch(err => {
-            console.log(err);
-        });
-}
 export const getWordDataOxford = (word) => {
     return fetch(`${process.env.REACT_APP_DOMAIN}/api/dictionary/oxford/${word}`, {
         method: 'get'
@@ -69,22 +59,21 @@ class Freestyle extends Component {
                 this.enterWord();
             }
         }
-        for (let i = 65; i < 91; i++) {
-            if (e.keyCode === i && letters.includes(String.fromCharCode(i))) {
-                const index = letters.indexOf(String.fromCharCode(i));
-                this.putLetterToWord(index);
-            }
+        if (letters.includes(String.fromCharCode(e.keyCode))) {
+            const index = letters.indexOf(String.fromCharCode(e.keyCode));
+            this.putLetterToWord(index);
         }
+    }
+    componentDidMount = () => {
+        document.onkeydown = this.checkKey;
     }
 
     newGame = () => {
-        // const wordList = [...this.state.wordList];
         this.setState({
             letters: [],
             word: [],
             isWord: false,
             letterPosition: [],
-            // wordList,
             started: true
         })
         this.getLetters();
@@ -109,7 +98,7 @@ class Freestyle extends Component {
         for (let m = randomVowelNum - vowelsNum; m > 0; m--) {
             letters[letters.indexOf('')] = vowels.charAt(Math.floor(Math.random() * vowels.length));
         }
-        //fill left empty slots with consonants
+        //fill remaining empty slots with consonants
         for (let j = emptySlotsNum - (vowelsNum - randomVowelNum); j > 0; j--) {
             letters[letters.indexOf('')] = consonants.charAt(Math.floor(Math.random() * consonants.length));
         }
@@ -117,7 +106,6 @@ class Freestyle extends Component {
     }
 
     enterWord = () => {
-
         if (this.state.word !== '' && this.state.isWord === true) {
             let word = [...this.state.word];
             word = word.join('');
@@ -131,7 +119,6 @@ class Freestyle extends Component {
         const word = array.join('');
         if (word !== "") {
             validate(word).then(res => {
-                console.log(res)
                 //if dictionary returns at least one lexical category, it is a word
                 if (res && res.success) {
                     this.setState({ isWord: res.response })
@@ -143,32 +130,26 @@ class Freestyle extends Component {
     }
 
     putLetterToWord = (index) => {
-
         if (this.state.letters[index] !== '') {
             const word = [...this.state.word];
             const letterPosition = [...this.state.letterPosition];
             const letters = [...this.state.letters];
-
             word.push(letters[index]);
             letterPosition.push(index);
             letters[index] = '';
-
             this.setState({ word, letterPosition, letters });
             this.validateWord(word);
         }
     }
 
     removeLetterFromWord = (index) => {
-
         if (index < this.state.word.length) {
-
             const word = [...this.state.word];
             const letters = [...this.state.letters];
             const letterPosition = [...this.state.letterPosition];
             const letter = this.state.word[index];
             const pos = this.state.letterPosition[index];
             letters[pos] = letter;
-
             removeFromArray(word, index);
             removeFromArray(letterPosition, index);
             this.setState({ word, letters, letterPosition });
@@ -177,9 +158,7 @@ class Freestyle extends Component {
     }
 
     shuffleLetters = () => {
-
         const letters = [...this.state.letters];
-
         //if this.state.word is not empty, return letters to their places before shuffling
         if (this.state.word.length !== 0) {
             let word = [...this.state.word];
@@ -191,11 +170,8 @@ class Freestyle extends Component {
             this.setState({ word: [], letterPosition: [] });
         }
         shuffle(letters);
-
-
         this.setState({ letters: letters, isWord: false });
     }
-
 
     getLetters = () => {
         let result = '';
@@ -214,7 +190,6 @@ class Freestyle extends Component {
 
         result = vowelString.concat(consonantString);
         this.setState({ letters: result, started: true }, () => this.shuffleLetters());
-        document.onkeydown = this.checkKey;
     }
 
     getVowelNumber = () => {
@@ -230,7 +205,7 @@ class Freestyle extends Component {
                     <WordList words={this.props.wordList} />
                 </div>
                 <div className="Scrabble__gameField">
-                    <Button type="start" started={started} onClick={this.getLetters} />
+
                     {
                         this.state.started
                             ?
@@ -254,7 +229,7 @@ class Freestyle extends Component {
                                 </div>
                                 <Button type="newGame" onClick={this.newGame} text="Get a new set of letters!" />
                             </div>
-                            : ''
+                            : <Button type="start" started={started} onClick={this.getLetters} />
                     }
                 </div>
             </div>

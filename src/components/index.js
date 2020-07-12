@@ -8,4 +8,5 @@ export * from './navigation/Toolbar'
 export * from './Definitions'
 export * from './Footer'
 export * from './WordList'
+export * from './Counter'
 

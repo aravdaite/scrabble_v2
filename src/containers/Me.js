@@ -3,6 +3,7 @@ import { Input, Button, WordList, Spinner } from '../components';
 import User from '../user.png';
 import { getData } from '../App'
 
+//change password call
 export const changePass = (currentPassword, password) => {
     return fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/updatepassword`, {
         credentials: 'include',
@@ -11,7 +12,6 @@ export const changePass = (currentPassword, password) => {
         body: JSON.stringify({
             currentPassword: currentPassword,
             newPassword: password
-
         })
     })
         .then(res => res.json())
@@ -41,12 +41,14 @@ class Me extends Component {
                 value: '',
             }
         },
+        userFound: false,
         name: "",
         email: "",
         sevenWords: [],
         freeWords: [],
         loading: false
     }
+    //get user data on mounting
     componentDidMount() {
         this.setState({ loading: true });
         getData()
@@ -55,8 +57,8 @@ class Me extends Component {
                     console.log(res.data)
                     const { name, email, sevenLetterWords, freestyleWords } = res.data;
                     //let string = `, ${res.data.name}`;
-                    this.setState({ name, email, sevenWords: sevenLetterWords, freeWords: freestyleWords, loading: false })
-                }
+                    this.setState({ userFound: true, name, email, sevenWords: sevenLetterWords, freeWords: freestyleWords, loading: false })
+                } else { this.setState({ userFound: false, loading: false }); }
             })
     }
     changePassword = () => {
@@ -82,8 +84,8 @@ class Me extends Component {
                 }
             })
     }
-    render() {
-        const { change, name, email, sevenWords, freeWords, loading } = this.state;
+    renderChangePassword = () => {
+        const { change } = this.state;
         const formElementsArray = [];
         for (let key in this.state.controls) {
             formElementsArray.push({
@@ -101,49 +103,48 @@ class Me extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)} />
         ));
 
+        return change ?
+            <div>
+                {form}
+                <Button type="submit" onClick={this.onSubmit} />
+            </div>
+            :
+            <Button text="Change password" type="submit" onClick={() => this.changePassword()} />
+    }
+    renderWordList = (wordList) => {
+        return <div className="element">
+            <p>Freestyle words you've made</p>
+            {wordList ?
+                <WordList words={wordList} />
+                :
+                ""}</div>
+    }
+    render() {
+        const { name, email, sevenWords, freeWords, loading, userFound } = this.state;
         return (
             <div className="About__mainBody">
                 <h2>Welcome to your dashboard: </h2>
                 {loading ?
                     <Spinner />
                     :
-                    <div className="row">
-                        <div className="element">
-                            <img className="Me__avatar" src={User} alt="user's avatar" />
-                            <ul className="Me__info">
-                                <li>Name: {name}</li>
-                                <li>Email: {email}</li>
-                                {change ?
-                                    <div>
-                                        {form}
-                                        <Button type="submit" onClick={this.onSubmit} />
-                                    </div>
-                                    :
-                                    <li><Button text="Change password" type="submit" onClick={() => this.changePassword()} /></li>
-
-                                }
-                            </ul>
+                    userFound ?
+                        <div className="row">
+                            <div className="element">
+                                <img className="Me__avatar" src={User} alt="user's avatar" />
+                                <ul className="Me__info">
+                                    <li>Name: {name}</li>
+                                    <li>Email: {email}</li>
+                                    <li> {this.renderChangePassword()}</li>
+                                </ul>
+                            </div>
+                            {this.renderWordList(freeWords)}
+                            {this.renderWordList(sevenWords)}
                         </div>
-                        <div className="element">
-                            <p>Freestyle words you've made</p>
-
-                            {freeWords ?
-                                <WordList words={freeWords} />
-                                :
-                                ""}</div>
-                        <div className="element">
-                            <p>7 letter words you've unscrambled</p>
-                            {sevenWords ?
-                                <WordList words={sevenWords} />
-                                :
-                                ""}
-                        </div>
-                    </div>
+                        : <p>It was not possible to load the user</p>
                 }
             </div >
         )
     }
 }
-
 
 export default Me;

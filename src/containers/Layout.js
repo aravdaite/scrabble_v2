@@ -15,7 +15,6 @@ export const fetchWords = () => {
         });
 }
 class Layout extends Component {
-
     state = {
         gameMode: 'online',
         wordListFree: [],
@@ -24,6 +23,7 @@ class Layout extends Component {
         loading: false
     }
 
+    //get word lists if a player has logged in, if not set empty arrays
     componentDidMount = () => {
         this.setState({ loading: true });
         let data = [];
@@ -32,7 +32,6 @@ class Layout extends Component {
         fetchWords()
             .then(res => {
                 if (res && res.hasOwnProperty('data')) {
-                    console.log(res.data[0])
                     data = [...res.data[0]];
                     data2 = [...res.data[1]];
                     this.setState({ wordListFree: data, wordListUnscramble: data2, loading: false })
@@ -43,9 +42,8 @@ class Layout extends Component {
     }
 
     addWord = (word, mode) => {
-        console.log("Runs add word")
         if (mode === 'freestyle') {
-            //put to the word list in DB
+            //put to the word to the list in DB
             fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/addFreeWord`, {
                 credentials: 'include',
                 method: 'put',
@@ -103,8 +101,7 @@ class Layout extends Component {
             this.setState({ wordListUnscramble })
         }
         if (mode === "online") {
-            console.log("addWordruns")
-            //put word in the local list, maybe screate add to the DB later
+            //put word in the local list, maybe create add to the DB later
             const onlineWords = [...this.state.onlineWords]
             onlineWords.unshift(word);
             this.setState({ onlineWords })
@@ -113,28 +110,25 @@ class Layout extends Component {
     render() {
         const { gameMode, wordListFree, wordListUnscramble, loading, onlineWords } = this.state;
         return (
-
             <div>
-                <div className="gameMode__Buttons">
+                <div className="Layout__Buttons">
                     <Button active={gameMode === 'freestyle'} type="gameMode" text="Free-Style" onClick={() => this.setState({ gameMode: 'freestyle' })} />
                     <Button active={gameMode === 'unscramble'} type="gameMode" text="Unscramble words" onClick={() => this.setState({ gameMode: 'unscramble' })} />
                     <Button active={gameMode === 'online'} type="gameMode" text="Online Multiplayer" onClick={() => this.setState({ gameMode: 'online' })} />
                 </div>
-                <div className="Scrabble__mainBody">
-                    {loading ?
-                        <Spinner />
+                {loading ?
+                    <Spinner />
+                    :
+                    gameMode === 'freestyle' ?
+                        <Freestyle addWord={this.addWord} wordList={wordListFree} />
                         :
-                        gameMode === 'freestyle' ?
-                            <Freestyle addWord={this.addWord} wordList={wordListFree} />
+                        (gameMode === 'unscramble' ?
+                            <Words7 addWord={this.addWord} wordList={wordListUnscramble} />
                             :
-                            (gameMode === 'unscramble' ?
-                                <Words7 addWord={this.addWord} wordList={wordListUnscramble} />
-                                :
-                                (gameMode === 'online' ?
-                                    <Online addWord={this.addWord} wordList={onlineWords} name={this.props.name} />
-                                    : ""))
-                    }
-                </div>
+                            (gameMode === 'online' ?
+                                <Online addWord={this.addWord} wordList={onlineWords} name={this.props.name} />
+                                : ""))
+                }
             </div >
         )
     }

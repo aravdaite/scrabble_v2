@@ -16,17 +16,38 @@ class Words7 extends Component {
         modalOpened: false,
         wordLetterNum: 7  //how many letters in a word
     }
+    checkKey = (e) => {
+        const { letters, word } = this.state
 
+        if (word !== 0) {
+            if (e.keyCode === 8) {
+                this.removeLetterFromWord(word.length - 1);
+            }
+            if (e.keyCode === 46) {
+                this.removeLetterFromWord(0);
+            }
+            else if (e.keyCode === 13) {
+                e.preventDefault();
+                this.enterWord();
+            }
+        }
+        if (letters.includes(String.fromCharCode(e.keyCode))) {
+            const index = letters.indexOf(String.fromCharCode(e.keyCode));
+            this.putLetterToWord(index);
+        }
+    }
+    componentDidMount = () => {
+        document.onkeydown = this.checkKey;
+    }
+    //get word with the right number of letters
     getWord = (number) => {
-
         fetch(`${process.env.REACT_APP_DOMAIN}/api/words/findword/${number}`, {
             method: 'get',
         })
             .then(res => res.json())
             .then(res => {
                 if ((res.hasOwnProperty('word')) && res.word.hasOwnProperty('words')) {
-                    console.log(res.word.words)
-                    const arr = [...Array.from(res.word.words)]
+                    const arr = [...Array.from(res.word.words.toUpperCase())]
                     shuffle(arr);
                     this.setState({ originalWord: res.word.words, letters: arr, started: true, word: [], letterPosition: [], rightWord: false });
                 }
@@ -50,18 +71,15 @@ class Words7 extends Component {
     removeLetterFromWord = (index) => {
 
         if (index < this.state.word.length) {
-
             const word = [...this.state.word];
             const letters = [...this.state.letters];
             const letterPosition = [...this.state.letterPosition];
             const letter = this.state.word[index];
             const pos = this.state.letterPosition[index];
             letters[pos] = letter;
-
             removeFromArray(word, index);
             removeFromArray(letterPosition, index);
             this.validateWord(word);
-
             this.setState({ word, letters, letterPosition });
         }
     }
@@ -74,7 +92,6 @@ class Words7 extends Component {
         }
     }
     shuffleLetters = () => {
-
         const letters = [...this.state.letters];
         //if this.state.word is not empty, return letters to their places before shuffling
         if (this.state.word.length !== 0) {
@@ -129,8 +146,8 @@ class Words7 extends Component {
                     </div>
                     <div className="Scrabble__gameField">
                         <div className="letterNum">
-                            How many letters?
-                        {[...Array(3).keys()].map((index) =>
+                            <p className="howMany">  How many letters?</p>
+                            {[...Array(3).keys()].map((index) =>
                                 <Button active={wordLetterNum === index + 5} type="gameMode" text={index + 5}
                                     onClick={() => { this.setState({ wordLetterNum: index + 5 }, () => started ? this.getWord(index + 5) : "") }} />
                             )}

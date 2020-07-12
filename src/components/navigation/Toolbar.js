@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo, NavigationItem } from '../../components';
+import { Logo, NavigationItem, Button } from '../../components';
 
 const logout = () => {
     fetch(`${process.env.REACT_APP_DOMAIN}/api/auth/logout`, {
@@ -30,7 +30,7 @@ export const Toolbar = ({ name, login }) => (
                 {login ?
                     <div>
                         <li><NavigationItem href="/me" css_classActive="NavigationItem-active" css_class="NavigationItem">{"Me"}</NavigationItem></li>
-                        <li><button onClick={() => logout()} className="NavigationItem-button">Logout</button></li>
+                        <li><Button onClick={() => logout()} type="logout" /></li>
                     </div>
                     :
                     <div>
