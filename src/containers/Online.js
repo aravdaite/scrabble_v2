@@ -59,7 +59,7 @@ class Words7 extends Component {
             this.setState({ oponentWord: data });
         });
         socket.on("letters", data => {
-            this.setState({ oponentLetters: data }, () => console.log(this.state.oponentLetters, this.state.oponentWord));
+            this.setState({ oponentLetters: data });
         });
 
         //check if oponent has won
@@ -72,9 +72,8 @@ class Words7 extends Component {
         //start a new game after losing
         socket.on("newWord", data => {
             const arr = [...Array.from(data.word[0].words)]
-            console.log(arr)
+            console.log(arr);
             shuffle(arr);
-
             this.setState({ gameState: "getReady", modalOpened: true });
             setTimeout(this.restartGame, 3500, arr, data);
         });
@@ -99,9 +98,8 @@ class Words7 extends Component {
                     if (data) {
                         roomNo = data.room;
                         const arr = [...Array.from(data.word[0].words.toUpperCase())]
-                        console.log(arr)
+                        console.log(arr);
                         shuffle(arr);
-
                         this.setState({
                             gameState: "oponentFound", spinner: false,
                             oponentLetters: arr, originalWord: data.word[0].words,
