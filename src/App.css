@@ -66,6 +66,9 @@ justify-content: center;
   cursor: pointer;
   text-decoration: underline;
 }
+.NavigationItem:link{
+  text-decoration: none;
+}
 
 
 .NavigationItem-active{

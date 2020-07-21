@@ -46,9 +46,9 @@ class forgotPassword extends Component {
         return (
             <div className="Scrabble__mainBody">
                 {emailSent
-                    ? <p>A link to reset your password has been sent to your email!</p>
+                    ? <p className="textWhite">A link to reset your password has been sent to your email!</p>
                     : <div className="Register">
-                        <p>Submit email to reset password:</p>
+                        <p className="textWhite">Submit email to reset password:</p>
                         <Input
                             elementType={email.elementType}
                             elementConfig={email.elementConfig}

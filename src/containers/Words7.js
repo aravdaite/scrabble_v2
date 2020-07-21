@@ -84,7 +84,7 @@ class Words7 extends Component {
         }
     }
     validateWord = (word) => {
-        const word2 = word.join('');
+        const word2 = word.join('').toLowerCase();
         if (word2 === this.state.originalWord) {
             this.setState({ rightWord: true });
         } else {
@@ -109,7 +109,7 @@ class Words7 extends Component {
     enterWord = () => {
         let { word, originalWord, wordLetterNum } = this.state;
         word = [...this.state.word];
-        word = word.join('');
+        word = word.join('').toLowerCase();
         if (word === originalWord) {
             this.props.addWord(word, 'unscramble');
             this.setState({ word: [], letterPosition: [], letters: [], originalWord: [], rightWord: false });
